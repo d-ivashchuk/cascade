@@ -43,4 +43,7 @@ yarn-error.log*
 
 #local_db
 data
+
+#storybook
+storybook-static
 *storybook.log
