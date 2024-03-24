@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: cascade_db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data:/var/lib/postgresql/data
