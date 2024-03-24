@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { CreatePost } from "~/app/_components/create-post";
+import { Button } from "~/components/ui/button";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
@@ -53,6 +54,7 @@ export default async function Home() {
             >
               {session ? "Sign out" : "Sign in"}
             </Link>
+            <Button variant="destructive">Hey There</Button>
           </div>
         </div>
 
