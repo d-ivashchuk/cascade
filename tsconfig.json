@@ -38,7 +38,9 @@
     "**/*.js",
     ".next/types/**/*.ts",
     "src/env.mjs",
-    "next.config.mjs"
+    "next.config.mjs",
+    "prettier.config.mjs",
+    "prettier.config.mjs"
   ],
   "exclude": ["node_modules"]
 }
