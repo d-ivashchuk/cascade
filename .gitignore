@@ -47,3 +47,5 @@ data
 #storybook
 storybook-static
 *storybook.log
+# Sentry Config File
+.sentryclirc

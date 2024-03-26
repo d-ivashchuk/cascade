@@ -6,8 +6,9 @@ import {
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
 import DiscordProvider from "next-auth/providers/discord";
+import * as Sentry from "@sentry/nextjs";
 
-import { env } from "~/env";
+import { env } from "~/env.mjs";
 import { db } from "~/server/db";
 
 /**
@@ -46,11 +47,19 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
+  events: {
+    signIn({ user }) {
+      Sentry.setUser({ id: user.id });
+    },
+    signOut() {
+      Sentry.setUser(null);
+    },
+  },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
     DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+      clientId: env.DISCORD_CLIENT_ID!,
+      clientSecret: env.DISCORD_CLIENT_SECRET!,
     }),
     /**
      * ...add more providers here.
