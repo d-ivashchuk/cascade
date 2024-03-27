@@ -35,9 +35,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     <TRPCReactProvider>
       <SessionProvider>
         <PostHogProvider client={posthog}>
-          <PostHogIdentification>
-            <Layout>{children}</Layout>
-          </PostHogIdentification>
+          <PostHogIdentification>{children}</PostHogIdentification>
         </PostHogProvider>
       </SessionProvider>
     </TRPCReactProvider>

@@ -1,7 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import Image from "next/image";
+import { Novatrix } from "uvcanvas";
 
 import { Button } from "~/components/ui/button";
 
@@ -29,14 +29,8 @@ export function LoginScreen() {
           </div>
         </div>
       </div>
-      <div className="hidden bg-muted lg:block">
-        <Image
-          src="/placeholder.svg"
-          alt="Image"
-          width="1920"
-          height="1080"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
+      <div className="hidden lg:block [&_canvas]:rounded-lg">
+        <Novatrix />
       </div>
     </div>
   );
