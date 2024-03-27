@@ -1,12 +1,11 @@
-'use client'
+"use client";
 
 import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 
-import { TRPCReactProvider } from "~/trpc/react";
-import { SessionProvider } from 'next-auth/react';
 import { Layout } from "~/components/patterns/layout";
+import Providers from "~/components/providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,11 +26,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
-        <TRPCReactProvider>
-        <SessionProvider>
+        <Providers>
           <Layout>{children}</Layout>
-        </SessionProvider>
-        </TRPCReactProvider>
+        </Providers>
       </body>
     </html>
   );
