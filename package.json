@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "prisma migrate && next build",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "dev": "next dev",
