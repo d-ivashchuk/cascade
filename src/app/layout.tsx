@@ -6,7 +6,7 @@ import { Inter } from "next/font/google";
 
 import { Layout } from "~/components/patterns/layout";
 import Providers from "~/components/providers";
-import { Suspense, Suspense } from "react";
+import { Suspense } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
