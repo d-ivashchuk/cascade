@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 
 import { Layout } from "~/components/patterns/layout";
 import Providers from "~/components/providers";
+import { Suspense } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,7 +28,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
         <Providers>
-          <Layout>{children}</Layout>
+          <Suspense>
+            <Layout>{children}</Layout>
+          </Suspense>
         </Providers>
       </body>
     </html>
