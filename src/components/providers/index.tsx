@@ -8,6 +8,7 @@ import { SessionProvider, useSession } from "next-auth/react";
 import { TRPCReactProvider } from "~/trpc/react";
 import { env } from "~/env.mjs";
 import { useSearchParams } from "next/navigation";
+import { ThemeProvider } from "./theme-provider";
 
 if (typeof window !== "undefined" && process.env.NODE_ENV === "production") {
   posthog.init(env.NEXT_PUBLIC_POSTHOG_API_KEY!, {
@@ -31,13 +32,20 @@ const PostHogIdentification = ({ children }: { children: React.ReactNode }) => {
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
-    <TRPCReactProvider>
-      <SessionProvider>
-        <PostHogProvider client={posthog}>
-          <PostHogIdentification>{children}</PostHogIdentification>
-        </PostHogProvider>
-      </SessionProvider>
-    </TRPCReactProvider>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <TRPCReactProvider>
+        <SessionProvider>
+          <PostHogProvider client={posthog}>
+            <PostHogIdentification>{children}</PostHogIdentification>
+          </PostHogProvider>
+        </SessionProvider>
+      </TRPCReactProvider>
+    </ThemeProvider>
   );
 };
 

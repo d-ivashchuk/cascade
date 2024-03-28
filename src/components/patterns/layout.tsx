@@ -15,6 +15,7 @@ import { Input } from "~/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
 import LoginLogoutButton from "./login-logout-button";
 import UserButton from "./user-button";
+import { ColorModeSwitch } from "./color-mode-switch";
 
 export async function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -120,6 +121,7 @@ export async function Layout({ children }: { children: React.ReactNode }) {
               />
             </div>
           </form>
+          <ColorModeSwitch />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
