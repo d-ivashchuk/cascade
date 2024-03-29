@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import posthog from "posthog-js";
 import { PostHogProvider, usePostHog } from "posthog-js/react";
 import { SessionProvider, useSession } from "next-auth/react";
@@ -9,6 +9,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { env } from "~/env.mjs";
 import { useSearchParams } from "next/navigation";
 import { ThemeProvider } from "./theme-provider";
+import * as Sentry from "@sentry/nextjs";
 
 if (typeof window !== "undefined" && process.env.NODE_ENV === "production") {
   posthog.init(env.NEXT_PUBLIC_POSTHOG_API_KEY!, {
@@ -16,16 +17,20 @@ if (typeof window !== "undefined" && process.env.NODE_ENV === "production") {
   });
 }
 
-const PostHogIdentification = ({ children }: { children: React.ReactNode }) => {
+const Identification = ({ children }: { children: React.ReactNode }) => {
   const { data: session } = useSession();
   const posthog = usePostHog();
+  const user = session?.user;
 
   const params = useSearchParams();
   const newLoginState = params.get("loginState");
 
   if (newLoginState == "signedIn" && session) {
-    posthog.identify(session.user.id);
+    posthog.identify(user?.id);
   }
+  useEffect(() => {
+    Sentry.setUser({ id: user?.id, email: user?.email ?? "" });
+  }, [user]);
 
   return <>{children}</>;
 };
@@ -41,7 +46,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       <TRPCReactProvider>
         <SessionProvider>
           <PostHogProvider client={posthog}>
-            <PostHogIdentification>{children}</PostHogIdentification>
+            <Identification>{children}</Identification>
           </PostHogProvider>
         </SessionProvider>
       </TRPCReactProvider>
