@@ -1,14 +1,13 @@
-import { NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+
+import { authOptions } from "~/server/auth";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const session = await getSession();
-  console.log("session");
-  console.log({ session });
+  const session = await getServerSession(authOptions);
 
   if (session?.user) {
     Sentry.setUser({
@@ -18,5 +17,5 @@ export async function GET() {
   }
 
   throw new Error("Sentry Example API Route Error");
-  return NextResponse.json({ data: "Testing Sentry Error..." });
+  // return NextResponse.json({ data: "Testing Sentry Error..." });
 }
