@@ -7,6 +7,8 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   const session = await getSession();
+  console.log("session");
+  console.log({ session });
 
   if (session?.user) {
     Sentry.setUser({
