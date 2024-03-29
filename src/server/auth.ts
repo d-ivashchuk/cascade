@@ -10,6 +10,7 @@ import * as Sentry from "@sentry/nextjs";
 
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
+import { loops } from "~/lib/loops";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -48,8 +49,22 @@ export const authOptions: NextAuthOptions = {
     }),
   },
   events: {
-    signIn({ user }) {
+    async signIn({ user, isNewUser }) {
       Sentry.setUser({ id: user.id, name: user.name, email: user.email ?? "" });
+      if (isNewUser) {
+        if (loops && user.email) {
+          await loops.sendEvent(
+            {
+              email: user.email,
+            },
+            "cascade_sign_up",
+            {
+              ...(user.name && { name: user.name }),
+              email: user.email,
+            },
+          );
+        }
+      }
     },
     signOut() {
       Sentry.setUser(null);
