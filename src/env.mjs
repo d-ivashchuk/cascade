@@ -41,6 +41,8 @@ export const env = createEnv({
       process.env.NODE_ENV === "production"
         ? z.string()
         : z.string().optional(),
+    TRIGGER_API_KEY: z.string().optional(),
+    TRIGGER_API_URL: z.string().optional(),
   },
 
   /**
@@ -74,6 +76,8 @@ export const env = createEnv({
     NEXT_PUBLIC_POSTHOG_API_KEY: process.env.NEXT_PUBLIC_POSTHOG_API_KEY,
     NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
     LOOPS_API_KEY: process.env.LOOPS_API_KEY,
+    TRIGGER_API_KEY: process.env.TRIGGER_API_KEY,
+    TRIGGER_API_URL: process.env.TRIGGER_API_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

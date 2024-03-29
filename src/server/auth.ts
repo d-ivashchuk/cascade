@@ -11,6 +11,8 @@ import * as Sentry from "@sentry/nextjs";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
 import { loops } from "~/lib/loops";
+import { isTriggerEnabled } from "~/lib/trigger";
+import { slackNewUserNotification } from "~/jobs";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -52,6 +54,15 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, isNewUser }) {
       Sentry.setUser({ id: user.id, name: user.name, email: user.email ?? "" });
       if (isNewUser) {
+        if (isTriggerEnabled) {
+          await slackNewUserNotification.invoke({
+            user: {
+              name: user.name ?? "unknown",
+              email: user.email ?? undefined,
+              id: user.id,
+            },
+          });
+        }
         if (loops && user.email) {
           await loops.sendEvent(
             {
