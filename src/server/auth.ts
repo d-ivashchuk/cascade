@@ -50,7 +50,7 @@ export const authOptions: NextAuthOptions = {
   events: {
     signIn({ user }) {
       console.log("User signed in, Sentry has registered", user);
-      Sentry.setUser({ id: user.id });
+      Sentry.setUser({ id: user.id, name: user.name, email: user.email ?? "" });
     },
     signOut() {
       console.log("User signed out, Sentry has been cleared");
