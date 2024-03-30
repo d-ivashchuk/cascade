@@ -26,6 +26,15 @@ export function LoginScreen() {
             >
               Login with Discord
             </Button>
+            <Button
+              onClick={() =>
+                signIn("google", { callbackUrl: "/?loginState=signedIn" })
+              }
+              variant="outline"
+              className="w-full"
+            >
+              Login with Google
+            </Button>
           </div>
         </div>
       </div>
