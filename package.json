@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.4.0",
+    "@icons-pack/react-simple-icons": "^9.4.0",
     "@prisma/client": "^5.10.2",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -62,7 +63,7 @@
     "@storybook/test": "^8.0.4",
     "@types/eslint": "^8.56.2",
     "@types/node": "^20.11.20",
-    "@types/react": "^18.2.57",
+    "@types/react": "18.2.62",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
