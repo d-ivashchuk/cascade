@@ -7,6 +7,7 @@ import { Inter } from "next/font/google";
 import { Layout } from "~/components/patterns/layout";
 import Providers from "~/components/providers";
 import { Suspense } from "react";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,6 +28,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
+        <Script
+          src="https://app.lemonsqueezy.com/js/lemon.js"
+          strategy="beforeInteractive"
+        />
         <Suspense>
           <Providers>
             <Layout>{children}</Layout>

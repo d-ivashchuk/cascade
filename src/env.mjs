@@ -51,6 +51,7 @@ export const env = createEnv({
         : z.string().optional(),
     TRIGGER_API_KEY: z.string().optional(),
     TRIGGER_API_URL: z.string().optional(),
+    LEMON_SQUEEZY_API_KEY: z.string().optional(),
   },
 
   /**
@@ -88,6 +89,7 @@ export const env = createEnv({
     LOOPS_API_KEY: process.env.LOOPS_API_KEY,
     TRIGGER_API_KEY: process.env.TRIGGER_API_KEY,
     TRIGGER_API_URL: process.env.TRIGGER_API_URL,
+    LEMON_SQUEEZY_API_KEY: process.env.LEMON_SQUEEZY_API_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
