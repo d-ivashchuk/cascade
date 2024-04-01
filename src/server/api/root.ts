@@ -1,6 +1,6 @@
 import { postRouter } from "~/server/api/routers/post";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
-import { lemonSqueezyRouter } from "./routers";
+import { lemonSqueezyRouter } from "./routers/lemon-squeezy";
 
 /**
  * This is the primary router for your server.

@@ -48,14 +48,46 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    role          Role      @default(USER)
-    accounts      Account[]
-    sessions      Session[]
+    id                       String                     @id @default(cuid())
+    name                     String?
+    email                    String?                    @unique
+    emailVerified            DateTime?
+    image                    String?
+    role                     Role                       @default(USER)
+    accounts                 Account[]
+    sessions                 Session[]
+    LemonSqueezySubscription LemonSqueezySubscription[]
+}
+
+model LemonSqueezyWebhookEvent {
+    id              Int      @id @default(autoincrement())
+    eventName       String
+    processed       Boolean  @default(false)
+    body            Json
+    createdAt       DateTime @default(now())
+    processingError String?
+}
+
+model LemonSqueezySubscription {
+    id                                  Int       @id @default(autoincrement())
+    lemonSqueezyId                      String    @unique
+    orderId                             Int
+    name                                String
+    email                               String
+    status                              String
+    renewsAt                            DateTime?
+    endsAt                              DateTime?
+    trialEndsAt                         DateTime?
+    isUsageBased                        Boolean   @default(false)
+    isPaused                            Boolean   @default(false)
+    customerId                          String
+    variantId                           String
+    customerPortalUrl                   String?
+    updatePaymentMethodUrl              String?
+    customerPortalUpdateSubscriptionUrl String?
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {

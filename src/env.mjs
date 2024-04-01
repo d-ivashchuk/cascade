@@ -52,6 +52,9 @@ export const env = createEnv({
     TRIGGER_API_KEY: z.string().optional(),
     TRIGGER_API_URL: z.string().optional(),
     LEMON_SQUEEZY_API_KEY: z.string().optional(),
+    LEMON_SQUEEZY_STORE_ID: z.string().optional(),
+    LEMON_SQUEEZY_WEBHOOK_SECRET: z.string().optional(),
+    LEMON_SQUEEZY_WEBHOOK_URL: z.string().optional(),
   },
 
   /**
@@ -90,6 +93,9 @@ export const env = createEnv({
     TRIGGER_API_KEY: process.env.TRIGGER_API_KEY,
     TRIGGER_API_URL: process.env.TRIGGER_API_URL,
     LEMON_SQUEEZY_API_KEY: process.env.LEMON_SQUEEZY_API_KEY,
+    LEMON_SQUEEZY_STORE_ID: process.env.LEMON_SQUEEZY_STORE_ID,
+    LEMON_SQUEEZY_WEBHOOK_SECRET: process.env.LEMON_SQUEEZY_WEBHOOK_SECRET,
+    LEMON_SQUEEZY_WEBHOOK_URL: process.env.LEMON_SQUEEZY_WEBHOOK_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

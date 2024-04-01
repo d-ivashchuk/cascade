@@ -6,6 +6,16 @@ import { Button } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
 import { api } from "~/trpc/react";
 
+//lemosqueezy params
+const embed = false;
+export const currency = "€";
+const intervalLabels = {
+  day: "day",
+  week: "wk",
+  month: "mo",
+  year: "yr",
+};
+
 const Subscriptions = () => {
   const router = useRouter();
 
@@ -24,16 +34,6 @@ const Subscriptions = () => {
   const storeId = productByIdQuery.data?.product?.data.attributes.store_id;
   const createCheckoutForVariantMutation =
     api.ls.createCheckoutForVariant.useMutation();
-
-  //lemosqueezy params
-  const embed = true;
-  const currency = "€";
-  const intervalLabels = {
-    day: "day",
-    week: "wk",
-    month: "mo",
-    year: "yr",
-  };
 
   return (
     <div className="space-y-8 p-10 sm:flex sm:justify-center sm:space-x-8 sm:space-y-0">
@@ -72,7 +72,6 @@ const Subscriptions = () => {
                 if (storeId) {
                   createCheckoutForVariantMutation.mutate(
                     {
-                      storeId,
                       variantId: variant.id,
                       embed,
                     },
