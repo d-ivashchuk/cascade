@@ -6,10 +6,19 @@ import { Skeleton } from "~/components/ui/skeleton";
 import { Badge } from "~/components/ui/badge";
 import { api } from "~/trpc/react";
 import Link from "next/link";
+import { Separator } from "~/components/ui/separator";
+import { currency } from "../subscriptions/page";
+import { Card } from "~/components/ui/card";
 
 const Page = () => {
   const utils = api.useUtils();
   const lemonSqueezyWebhookQuery = api.ls.getWebhook.useQuery();
+  const lemonSqueezyProductsQuery =
+    api.ls.getProductsFromLemonSqueezy.useQuery();
+  const syncProductsFromLemonsqueezyMutation =
+    api.ls.createPlansFromLemonSqueezyVariants.useMutation({
+      onSuccess: (data) => console.log({ data }),
+    });
   const createLemonSqueezyWebhookMutation = api.ls.createLsWebhook.useMutation({
     onSuccess: () => utils.ls.getWebhook.invalidate(),
   });
@@ -17,7 +26,9 @@ const Page = () => {
   return (
     <div className="space-y-4">
       <h1 className="text-2xl">Lemon Squeezy setup</h1>
-      <p className="prose">
+      <Separator />
+      <h2 className="text-xl">Webhook setup</h2>
+      <p>
         For <b>local development</b> run the following command in your terminal:{" "}
         <br />
         <code>npx localtunnel --port 3000 --subdomain your-domain</code> and
@@ -76,6 +87,61 @@ const Page = () => {
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
         )}
         Create Lemon Squeezy webhook
+      </Button>
+      <Separator />
+      <h2 className="text-xl">Plans setup</h2>
+      <p>
+        Create some products & variants on Lemon Squeezy first and then populate
+        your SaaS plans with a single click here
+      </p>
+      {lemonSqueezyProductsQuery.isLoading && (
+        <Skeleton className="h-[20px] w-[200px]" />
+      )}
+      {lemonSqueezyProductsQuery.data?.map((product) => {
+        return (
+          <Card key={product.id} className="space-y-2 p-4">
+            <div className="flex space-x-2">
+              <h3 className="text-lg">{product.attributes.name}</h3>
+              <Link
+                href={`https://app.lemonsqueezy.com/products/${product.id}`}
+                target="_blank"
+                className="self-center transition-colors hover:text-foreground"
+              >
+                <LinkIcon className="h-4 w-4" />
+              </Link>
+            </div>
+            <p>{product.attributes.description ?? "Missing description"}</p>
+            <Separator />
+            {
+              <div className="space-y-2">
+                {product.variants?.map((variant) => {
+                  return (
+                    <div key={variant.id} className="flex space-x-2">
+                      {variant.hasCorrespondingPlanInDB && (
+                        <Badge>Synced</Badge>
+                      )}
+                      <p>{variant.attributes.name}</p>
+                      <p>
+                        {currency}
+                        {(variant.attributes.price / 100).toFixed(2)}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            }
+          </Card>
+        );
+      })}
+
+      <Button
+        onClick={() => syncProductsFromLemonsqueezyMutation.mutate()}
+        disabled={syncProductsFromLemonsqueezyMutation.isPending}
+      >
+        {syncProductsFromLemonsqueezyMutation.isPending && (
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        )}
+        Sync Lemon Squeezy products to Saas plans
       </Button>
     </div>
   );

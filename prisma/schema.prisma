@@ -57,6 +57,9 @@ model User {
     accounts                 Account[]
     sessions                 Session[]
     LemonSqueezySubscription LemonSqueezySubscription[]
+
+    plan   Plan? @relation(fields: [planId], references: [id])
+    planId Int?
 }
 
 model LemonSqueezyWebhookEvent {
@@ -88,6 +91,15 @@ model LemonSqueezySubscription {
 
     userId String
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Plan {
+    id                    Int    @id @default(autoincrement())
+    lemonSqueezyVariantId String @unique
+    name                  String
+    credits               Int?
+
+    users User[] // This establishes the one-to-many relationship
 }
 
 model VerificationToken {

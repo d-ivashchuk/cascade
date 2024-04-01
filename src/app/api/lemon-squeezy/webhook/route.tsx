@@ -129,6 +129,27 @@ export async function POST(request: Request) {
           where: { id: createdWebhook.id },
           data: { processed: true },
         });
+        if (subscriptionData.status !== "cancelled") {
+          const planInDbCorrespondingToSubscription = await db.plan.findFirst({
+            where: {
+              lemonSqueezyVariantId: String(subscriptionData.variant_id),
+            },
+          });
+          await db.user.update({
+            where: { id: userIdInDatabase },
+            data: {
+              planId: planInDbCorrespondingToSubscription?.id,
+            },
+          });
+        } else {
+          await db.user.update({
+            where: { id: userIdInDatabase },
+            data: {
+              planId: null,
+            },
+          });
+        }
+
         break;
       case "subscription_cancelled":
         await db.lemonSqueezySubscription.update({
@@ -142,6 +163,12 @@ export async function POST(request: Request) {
         await db.lemonSqueezyWebhookEvent.update({
           where: { id: createdWebhook.id },
           data: { processed: true },
+        });
+        await db.user.update({
+          where: { id: userIdInDatabase },
+          data: {
+            planId: null,
+          },
         });
         break;
       default:

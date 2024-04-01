@@ -11,6 +11,7 @@ import {
   getProduct,
   getVariant,
   lemonSqueezySetup,
+  listProducts,
   listVariants,
   listWebhooks,
 } from "@lemonsqueezy/lemonsqueezy.js";
@@ -174,5 +175,84 @@ export const lemonSqueezyRouter = createTRPCRouter({
     const webhook = await hasWebhook();
 
     return webhook;
+  }),
+  createPlansFromLemonSqueezyVariants: protectedProcedure.mutation(
+    async ({ ctx }) => {
+      setupLemonSqueezy();
+
+      // Fetch variants from Lemon Squeezy
+      const variantsResponse = await listVariants(); // Adjust to use the correct parameters/filters as necessary
+      const variants = variantsResponse.data?.data;
+
+      if (!variants) {
+        throw new Error("Failed to fetch variants from Lemon Squeezy.");
+      }
+
+      // Iterate over each variant and create a plan in the database
+      const plans = await Promise.all(
+        variants.map(async (variant) => {
+          const existingPlan = await ctx.db.plan.findUnique({
+            where: {
+              lemonSqueezyVariantId: variant.id,
+            },
+          });
+
+          if (!existingPlan) {
+            return await ctx.db.plan.create({
+              data: {
+                lemonSqueezyVariantId: variant.id, // Assuming this is the correct mapping
+                name: variant.attributes.name,
+              },
+            });
+          }
+
+          return existingPlan;
+        }),
+      );
+
+      return plans;
+    },
+  ),
+  getProductsFromLemonSqueezy: protectedProcedure.query(async ({ ctx }) => {
+    setupLemonSqueezy();
+
+    const products = await listProducts();
+    const variants = await listVariants();
+
+    // Fetch all plans from the database to check against the variants
+    const plansInDatabase = await ctx.db.plan.findMany({
+      select: {
+        lemonSqueezyVariantId: true, // Assuming this field links your plans to Lemon Squeezy variants
+      },
+    });
+    const planVariantIdsInDB = plansInDatabase.map(
+      (plan) => plan.lemonSqueezyVariantId,
+    );
+
+    // Iterate over products and their variants, checking if each variant has a corresponding plan in the database
+    const productsWithVariants = products.data?.data.map((product) => {
+      const productVariants = variants.data?.data
+        .filter(
+          (variant) => String(variant.attributes.product_id) === product.id,
+        )
+        .map((variant) => {
+          // Check if the variant has a corresponding plan in the database
+          const hasCorrespondingPlanInDB = planVariantIdsInDB.includes(
+            variant.id,
+          );
+          // Add an attribute to each variant for this
+          return { ...variant, hasCorrespondingPlanInDB };
+        });
+
+      // Note: It's not clear how hasPlanInDatabase was intended to be used on the product level,
+      // since its relevance seems more suited to individual variants. Hence, it's implemented at the variant level above.
+
+      return {
+        ...product,
+        variants: productVariants,
+      };
+    });
+
+    return productsWithVariants;
   }),
 });
