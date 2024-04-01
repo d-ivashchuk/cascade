@@ -27,7 +27,7 @@ const Billing = () => {
       {userSubscriptionQuery.isLoading && (
         <Skeleton className="h-[100px] max-w-lg" />
       )}
-      {userSubscriptionQuery.data ? (
+      {subscription ? (
         <Card className="min-h-[100px] max-w-lg p-4">
           <div className="flex justify-between">
             <h2 className="text-xl">Subscription</h2>

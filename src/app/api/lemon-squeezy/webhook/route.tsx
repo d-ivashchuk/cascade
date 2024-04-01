@@ -7,6 +7,8 @@ import {
   type LemonsqueezySubscriptionAttributes,
   type LemonsqueezyWebhookPayload,
 } from "~/types/lemonsqueezy";
+import { isTriggerEnabled } from "~/lib/trigger";
+import { slackNewChurnNotification, slackNewPaymentNotification } from "~/jobs";
 
 export async function POST(request: Request) {
   if (!env.LEMON_SQUEEZY_WEBHOOK_SECRET) {
@@ -51,6 +53,31 @@ export async function POST(request: Request) {
       where: { lemonSqueezyId: lemonSqueezySubscriptionId },
     });
 
+    if (isTriggerEnabled) {
+      if (event === "subscription_created") {
+        await slackNewPaymentNotification.invoke({
+          user: {
+            email: subscriptionData.user_email,
+            id: userIdInDatabase,
+          },
+          productName: subscriptionData.product_name,
+        });
+      }
+      if (
+        event === "subscription_cancelled" ||
+        (event === "subscription_updated" &&
+          subscriptionData.status === "cancelled")
+      ) {
+        await slackNewChurnNotification.invoke({
+          user: {
+            email: subscriptionData.user_email,
+            id: userIdInDatabase,
+          },
+          productName: subscriptionData.product_name,
+        });
+      }
+    }
+
     switch (event) {
       case "subscription_created":
       case "subscription_updated":
@@ -61,9 +88,10 @@ export async function POST(request: Request) {
             renewsAt: subscriptionData.renews_at
               ? new Date(subscriptionData.renews_at)
               : null,
-            endsAt: subscriptionData.ends_at
-              ? new Date(subscriptionData.ends_at)
-              : null,
+            endsAt:
+              subscriptionData.status === "cancelled"
+                ? new Date(existingSubscription?.renewsAt ?? new Date())
+                : subscriptionData.ends_at ?? null,
             trialEndsAt: subscriptionData.trial_ends_at
               ? new Date(subscriptionData.trial_ends_at)
               : null,
