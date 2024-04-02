@@ -30,34 +30,34 @@ export async function Layout({ children }: { children: React.ReactNode }) {
             <span className="sr-only">Acme Inc</span>
           </Link>
           <Link
-            href="#"
+            href="/"
             className="text-foreground transition-colors hover:text-foreground"
           >
-            Dashboard
+            Cascade
           </Link>
           <Link
-            href="#"
+            href="/subscriptions"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Orders
+            Subscriptions
           </Link>
           <Link
-            href="#"
+            href="/billing"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Products
+            Billing
           </Link>
           <Link
-            href="#"
+            href="/usage"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Customers
+            Usage
           </Link>
           <Link
-            href="#"
+            href="/management"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Analytics
+            Management
           </Link>
         </nav>
         <Sheet>

@@ -10,8 +10,8 @@ import { Suspense, useEffect } from "react";
 import Script from "next/script";
 import { useSession } from "next-auth/react";
 import { redirect, usePathname } from "next/navigation";
-import router from "next/router";
 import SplashScreen from "~/components/patterns/splash-screen";
+import { Toaster } from "~/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -63,6 +63,7 @@ export default function RootLayout({
             </ProtectedRoutes>
           </Providers>
         </Suspense>
+        <Toaster />
       </body>
     </html>
   );

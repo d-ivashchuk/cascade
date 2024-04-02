@@ -58,8 +58,9 @@ model User {
     sessions                 Session[]
     LemonSqueezySubscription LemonSqueezySubscription[]
 
-    plan   Plan? @relation(fields: [planId], references: [id])
-    planId Int?
+    plan         Plan?          @relation(fields: [planId], references: [id])
+    planId       Int?
+    FeatureUsage FeatureUsage[]
 }
 
 model LemonSqueezyWebhookEvent {
@@ -100,6 +101,18 @@ model Plan {
     credits               Int?
 
     users User[] // This establishes the one-to-many relationship
+}
+
+model FeatureUsage {
+    id           String @id @default(cuid())
+    userId       String
+    buttonClicks Int    @default(0)
+
+    // Add more features as needed
+    date DateTime @default(now())
+    user User     @relation(fields: [userId], references: [id])
+
+    @@unique([userId, date])
 }
 
 model VerificationToken {
