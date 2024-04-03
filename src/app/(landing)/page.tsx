@@ -49,10 +49,11 @@ export default async function Home() {
           <Link href="/login">
             <Button>Try demo</Button>
           </Link>
-          <Button variant="outline">
-            {" "}
-            <SiGithub className="mr-2 h-4 w-4" /> Code on GitHub
-          </Button>
+          <Link target="_blank" href="https://github.com/d-ivashchuk/cascade">
+            <Button variant="outline">
+              <SiGithub className="mr-2 h-4 w-4" /> Code on GitHub
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -79,7 +80,7 @@ export default async function Home() {
         </TechCard>
         <TechCard>
           <SiTailwindcss className="h-14 w-14 p-2" />
-          <p>Tailwind + Shadcn/ui</p>
+          <p>Shadcn/ui</p>
         </TechCard>
         <TechCard>
           <SiPosthog className="h-14 w-14 p-2" />
