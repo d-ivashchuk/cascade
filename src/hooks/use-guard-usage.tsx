@@ -9,10 +9,10 @@ const useGuardedSpendCredits = () => {
   const utils = api.useUtils();
 
   const { data: subscriptionData, isLoading: isLoadingSubscription } =
-    api.ls.getSubscriptionByUserId.useQuery();
+    api.paymentManagement.getSubscriptionByUserId.useQuery();
   const { data: usageData, isLoading: isLoadingUsage } =
-    api.ls.getUsageForUser.useQuery();
-  const spendCreditsMutation = api.ls.spendCredits.useMutation({
+    api.paymentManagement.getUsageForUser.useQuery();
+  const spendCreditsMutation = api.paymentManagement.spendCredits.useMutation({
     onSuccess: () => {
       toast.success("Credits spent successfully");
     },
@@ -40,7 +40,7 @@ const useGuardedSpendCredits = () => {
       if (!hasRunOutOfCredits) {
         try {
           await spendCreditsMutation.mutateAsync({ amount: spendAmount });
-          await utils.ls.getUsageForUser.invalidate();
+          await utils.paymentManagement.getUsageForUser.invalidate();
         } catch (error) {
           toast.error("Failed to spend credits");
         }
@@ -51,7 +51,6 @@ const useGuardedSpendCredits = () => {
     [
       isLoadingSubscription,
       isLoadingUsage,
-      spendCreditsMutation.isPending,
       hasRunOutOfCredits,
       spendCreditsMutation,
       utils,

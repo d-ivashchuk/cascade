@@ -62,8 +62,9 @@ model User {
     planId       Int?
     FeatureUsage FeatureUsage[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @default(now()) @updatedAt
+    createdAt       DateTime          @default(now())
+    updatedAt       DateTime          @default(now()) @updatedAt
+    oneTimePurchase OneTimePurchase[]
 }
 
 model LemonSqueezyWebhookEvent {
@@ -95,6 +96,20 @@ model LemonSqueezySubscription {
 
     userId String
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model OneTimePurchase {
+    id             Int    @id @default(autoincrement())
+    lemonSqueezyId String @unique
+    orderId        Int
+    name           String
+    email          String
+    status         String
+    customerId     String
+    variantId      String
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
 }
 
 model Plan {

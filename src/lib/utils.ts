@@ -33,3 +33,7 @@ export function formatDate(
     ...options,
   }).format(new Date(date));
 }
+
+export function assertNever(x: never): never {
+  throw new Error(`Unexpected object: ${JSON.stringify(x)}`);
+}

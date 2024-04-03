@@ -31,9 +31,16 @@ export interface LemonsqueezySubscriptionAttributes {
 }
 
 export interface LemonsqueezyOrderAttributes {
-  first_subscription_item: {
+  status: "paid";
+  user_email: string;
+  user_name: string;
+  customer_id: number;
+  id: string;
+  first_order_item: {
     id: number;
     price_id: number;
+    variant_id: number;
+    variant_name: string;
     subscription_id: number;
   };
 }

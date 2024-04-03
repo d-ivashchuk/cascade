@@ -8,8 +8,9 @@ import { api } from "~/trpc/react";
 
 const Usage = () => {
   const guardedUsage = useGuardedSpendCredits();
-  const getUsageForUserQuery = api.ls.getUsageForUser.useQuery();
-  const getSubscriptionForUserQuery = api.ls.getSubscriptionByUserId.useQuery();
+  const getUsageForUserQuery = api.paymentManagement.getUsageForUser.useQuery();
+  const getSubscriptionForUserQuery =
+    api.paymentManagement.getSubscriptionByUserId.useQuery();
 
   const plan = getSubscriptionForUserQuery.data?.plan;
 

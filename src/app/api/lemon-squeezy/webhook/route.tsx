@@ -4,11 +4,13 @@ import { env } from "~/env.mjs";
 import { webhookHasMeta } from "./utils";
 import { db } from "../../../../server/db";
 import {
+  type LemonsqueezyOrderAttributes,
   type LemonsqueezySubscriptionAttributes,
   type LemonsqueezyWebhookPayload,
 } from "~/types/lemonsqueezy";
 import { isTriggerEnabled } from "~/lib/trigger";
 import { slackNewChurnNotification, slackNewPaymentNotification } from "~/jobs";
+import { assertNever } from "~/lib/utils";
 
 export async function POST(request: Request) {
   if (!env.LEMON_SQUEEZY_WEBHOOK_SECRET) {
@@ -44,7 +46,7 @@ export async function POST(request: Request) {
       },
     });
     const lemonSqueezySubscriptionId = data.data.id;
-    const subscriptionData = data.data
+    const webhookData = data.data
       .attributes as LemonsqueezySubscriptionAttributes;
     const userIdInDatabase = data.meta.custom_data.user_id_in_database;
     const event = data.meta.event_name;
@@ -57,69 +59,105 @@ export async function POST(request: Request) {
       if (event === "subscription_created") {
         await slackNewPaymentNotification.invoke({
           user: {
-            email: subscriptionData.user_email,
+            email: webhookData.user_email,
             id: userIdInDatabase,
           },
-          productName: subscriptionData.product_name,
+          productName: webhookData.product_name,
         });
       }
       if (
         event === "subscription_cancelled" ||
-        (event === "subscription_updated" &&
-          subscriptionData.status === "cancelled")
+        (event === "subscription_updated" && webhookData.status === "cancelled")
       ) {
         await slackNewChurnNotification.invoke({
           user: {
-            email: subscriptionData.user_email,
+            email: webhookData.user_email,
             id: userIdInDatabase,
           },
-          productName: subscriptionData.product_name,
+          productName: webhookData.product_name,
+        });
+      }
+      if (event === "order_created") {
+        await slackNewChurnNotification.invoke({
+          user: {
+            email: webhookData.user_email,
+            id: userIdInDatabase,
+          },
+          productName: webhookData.product_name,
         });
       }
     }
 
     switch (event) {
+      case "order_created":
+        const orderData = data.data.attributes as LemonsqueezyOrderAttributes;
+        if (orderData.status === "paid") {
+          console.log(JSON.stringify(orderData, null, 2));
+          await db.oneTimePurchase.create({
+            data: {
+              userId: userIdInDatabase,
+              email: orderData.user_email,
+              name: orderData.user_name,
+              customerId: String(orderData.customer_id),
+              variantId: String(orderData.first_order_item.variant_id),
+              orderId: orderData.first_order_item.id,
+              lemonSqueezyId: data.data.id,
+              status: "paid",
+            },
+          });
+          await slackNewPaymentNotification.invoke({
+            user: {
+              email: orderData.user_email,
+              id: userIdInDatabase,
+            },
+            productName: orderData.first_order_item.variant_name,
+          });
+
+          await db.lemonSqueezyWebhookEvent.update({
+            where: { id: createdWebhook.id },
+            data: { processed: true },
+          });
+        }
+        break;
       case "subscription_created":
       case "subscription_updated":
         await db.lemonSqueezySubscription.upsert({
           where: { lemonSqueezyId: lemonSqueezySubscriptionId },
           update: {
-            status: subscriptionData.status,
-            renewsAt: subscriptionData.renews_at
-              ? new Date(subscriptionData.renews_at)
+            status: webhookData.status,
+            renewsAt: webhookData.renews_at
+              ? new Date(webhookData.renews_at)
               : null,
             endsAt:
-              subscriptionData.status === "cancelled"
+              webhookData.status === "cancelled"
                 ? new Date(existingSubscription?.renewsAt ?? new Date())
-                : subscriptionData.ends_at ?? null,
-            trialEndsAt: subscriptionData.trial_ends_at
-              ? new Date(subscriptionData.trial_ends_at)
+                : webhookData.ends_at ?? null,
+            trialEndsAt: webhookData.trial_ends_at
+              ? new Date(webhookData.trial_ends_at)
               : null,
             userId: userIdInDatabase,
-            customerId: String(subscriptionData.customer_id),
-            variantId: String(subscriptionData.variant_id),
+            customerId: String(webhookData.customer_id),
+            variantId: String(webhookData.variant_id),
           },
           create: {
             lemonSqueezyId: lemonSqueezySubscriptionId,
-            customerId: String(subscriptionData.customer_id),
-            orderId: subscriptionData.order_id,
-            name: subscriptionData.product_name,
-            email: subscriptionData.user_email,
-            status: subscriptionData.status,
-            renewsAt: subscriptionData.renews_at
-              ? new Date(subscriptionData.renews_at)
+            customerId: String(webhookData.customer_id),
+            orderId: webhookData.order_id,
+            name: webhookData.product_name,
+            email: webhookData.user_email,
+            status: webhookData.status,
+            renewsAt: webhookData.renews_at
+              ? new Date(webhookData.renews_at)
               : null,
-            endsAt: subscriptionData.ends_at
-              ? new Date(subscriptionData.ends_at)
+            endsAt: webhookData.ends_at ? new Date(webhookData.ends_at) : null,
+            trialEndsAt: webhookData.trial_ends_at
+              ? new Date(webhookData.trial_ends_at)
               : null,
-            trialEndsAt: subscriptionData.trial_ends_at
-              ? new Date(subscriptionData.trial_ends_at)
-              : null,
-            variantId: String(subscriptionData.variant_id),
-            customerPortalUrl: subscriptionData.urls.customer_portal,
-            updatePaymentMethodUrl: subscriptionData.urls.update_payment_method,
+            variantId: String(webhookData.variant_id),
+            customerPortalUrl: webhookData.urls.customer_portal,
+            updatePaymentMethodUrl: webhookData.urls.update_payment_method,
             customerPortalUpdateSubscriptionUrl:
-              subscriptionData.urls.customer_portal_update_subscription,
+              webhookData.urls.customer_portal_update_subscription,
             user: {
               connect: { id: userIdInDatabase },
             },
@@ -129,10 +167,10 @@ export async function POST(request: Request) {
           where: { id: createdWebhook.id },
           data: { processed: true },
         });
-        if (subscriptionData.status !== "cancelled") {
+        if (webhookData.status !== "cancelled") {
           const planInDbCorrespondingToSubscription = await db.plan.findFirst({
             where: {
-              lemonSqueezyVariantId: String(subscriptionData.variant_id),
+              lemonSqueezyVariantId: String(webhookData.variant_id),
             },
           });
           await db.user.update({
@@ -172,7 +210,7 @@ export async function POST(request: Request) {
         });
         break;
       default:
-        throw new Error(`Unhandled event: ${event}`);
+        assertNever(event);
     }
 
     return new Response("OK", { status: 200 });

@@ -13,7 +13,10 @@ const UserButton = () => {
       {isAuthenticated ? (
         <Avatar>
           <AvatarImage src={session.data.user.image ?? undefined} />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback>
+            {session.data.user.name?.charAt(0) ??
+              session.data.user.email?.charAt(0)}
+          </AvatarFallback>
         </Avatar>
       ) : (
         <CircleUser />

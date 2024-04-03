@@ -54,7 +54,7 @@ export const slackNewPaymentNotification = triggerClient.defineJob({
   run: async (payload, io) => {
     await io.slack.postMessage("post message", {
       channel: "C06RZ0QNP6W",
-      text: `🔥 *New payment*\n\nEmail: ${payload.user.email}\nID:${payload.user.id}`,
+      text: `🔥 *New payment*\n\nEmail: ${payload.user.email}\nID:${payload.user.id}\n\n*${payload.productName}*`,
     });
   },
 });

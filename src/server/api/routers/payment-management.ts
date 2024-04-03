@@ -50,7 +50,7 @@ export async function hasWebhook() {
   return webhook;
 }
 
-export const lemonSqueezyRouter = createTRPCRouter({
+export const paymentManagementRouter = createTRPCRouter({
   getSubscriptionByUserId: protectedProcedure.query(async ({ ctx }) => {
     setupLemonSqueezy();
     const user = ctx.session?.user;
@@ -333,5 +333,20 @@ export const lemonSqueezyRouter = createTRPCRouter({
       totalButtonClicksToday,
       totalButtonClicksThisMonth,
     };
+  }),
+  getOneTimePurchasesForUser: protectedProcedure.query(async ({ ctx }) => {
+    const oneTimePurchases = await ctx.db.oneTimePurchase.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+    });
+
+    return oneTimePurchases;
+  }),
+  getAllVariants: protectedProcedure.query(async () => {
+    setupLemonSqueezy();
+    const variants = await listVariants();
+
+    return variants;
   }),
 });

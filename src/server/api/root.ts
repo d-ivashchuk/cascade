@@ -1,6 +1,6 @@
 import { postRouter } from "~/server/api/routers/post";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
-import { lemonSqueezyRouter } from "./routers/lemon-squeezy";
+import { paymentManagementRouter } from "./routers/payment-management";
 import { superAdminRouter } from "./routers/super-admin";
 
 /**
@@ -10,7 +10,7 @@ import { superAdminRouter } from "./routers/super-admin";
  */
 export const appRouter = createTRPCRouter({
   post: postRouter,
-  ls: lemonSqueezyRouter,
+  paymentManagement: paymentManagementRouter,
   superAdmin: superAdminRouter,
 });
 

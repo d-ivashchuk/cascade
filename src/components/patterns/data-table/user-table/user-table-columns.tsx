@@ -5,16 +5,7 @@ import * as React from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 
 import { formatDate } from "~/lib/utils";
-import { Badge } from "~/components/ui/badge";
 
-import { Checkbox } from "~/components/ui/checkbox";
-
-import {
-  CircleIcon,
-  ArrowDownIcon,
-  ArrowRightIcon,
-  ArrowUpIcon,
-} from "lucide-react";
 import {
   type DataTableSearchableColumn,
   type DataTableFilterableColumn,
@@ -54,12 +45,16 @@ export const filterableColumns: DataTableFilterableColumn<
     title: "Plan",
     options: [
       {
-        label: "1",
+        label: "Default",
         value: "1",
       },
       {
-        label: "2",
+        label: "Monthly",
         value: "2",
+      },
+      {
+        label: "Yearly",
+        value: "4",
       },
     ],
   },
@@ -79,7 +74,7 @@ export function getColumns(): ColumnDef<User & { plan: Plan | null }>[] {
     {
       accessorKey: "email",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="email" />
+        <DataTableColumnHeader column={column} title="Email" />
       ),
       cell: ({ row }) => <div>{row.getValue("email")}</div>,
       enableSorting: true,
@@ -99,7 +94,10 @@ export function getColumns(): ColumnDef<User & { plan: Plan | null }>[] {
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Plan" />
       ),
-      cell: ({ row }) => <div>{row.getValue("planId")}</div>,
+      cell: ({ row }) => {
+        const plan = row.original.plan;
+        return <div>{plan?.name}</div>;
+      },
       enableColumnFilter: false,
       enableSorting: true,
     },
