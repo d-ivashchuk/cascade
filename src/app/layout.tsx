@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import { redirect, usePathname } from "next/navigation";
 import SplashScreen from "~/components/patterns/splash-screen";
 import { Toaster } from "~/components/ui/sonner";
+import { TailwindIndicator } from "~/components/patterns/tailwind-indicator";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -64,6 +65,7 @@ export default function RootLayout({
           </Providers>
         </Suspense>
         <Toaster />
+        <TailwindIndicator />
       </body>
     </html>
   );

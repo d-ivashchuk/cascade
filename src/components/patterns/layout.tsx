@@ -54,7 +54,7 @@ export async function Layout({ children }: { children: React.ReactNode }) {
             Usage
           </Link>
           <Link
-            href="/management"
+            href="/user-management"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Management

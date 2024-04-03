@@ -1,6 +1,7 @@
 import { postRouter } from "~/server/api/routers/post";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 import { lemonSqueezyRouter } from "./routers/lemon-squeezy";
+import { superAdminRouter } from "./routers/super-admin";
 
 /**
  * This is the primary router for your server.
@@ -10,6 +11,7 @@ import { lemonSqueezyRouter } from "./routers/lemon-squeezy";
 export const appRouter = createTRPCRouter({
   post: postRouter,
   ls: lemonSqueezyRouter,
+  superAdmin: superAdminRouter,
 });
 
 // export type definition of API

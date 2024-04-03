@@ -61,6 +61,9 @@ model User {
     plan         Plan?          @relation(fields: [planId], references: [id])
     planId       Int?
     FeatureUsage FeatureUsage[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
 }
 
 model LemonSqueezyWebhookEvent {

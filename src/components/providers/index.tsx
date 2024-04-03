@@ -10,6 +10,7 @@ import { env } from "~/env.mjs";
 import { useSearchParams } from "next/navigation";
 import { ThemeProvider } from "./theme-provider";
 import * as Sentry from "@sentry/nextjs";
+import { TooltipProvider } from "~/components/ui/tooltip";
 
 if (typeof window !== "undefined" && process.env.NODE_ENV === "production") {
   posthog.init(env.NEXT_PUBLIC_POSTHOG_API_KEY!, {
@@ -46,7 +47,9 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       <TRPCReactProvider>
         <SessionProvider>
           <PostHogProvider client={posthog}>
-            <Identification>{children}</Identification>
+            <TooltipProvider>
+              <Identification>{children}</Identification>
+            </TooltipProvider>
           </PostHogProvider>
         </SessionProvider>
       </TRPCReactProvider>

@@ -40,7 +40,8 @@
     "src/env.mjs",
     "next.config.mjs",
     "prettier.config.mjs",
-    "prettier.config.mjs"
+    "prettier.config.mjs",
+    "types/next-auth.d.ts"
   ],
   "exclude": ["node_modules"]
 }

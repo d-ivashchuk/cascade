@@ -14,6 +14,7 @@ import { db } from "~/server/db";
 import { loops } from "~/lib/loops";
 import { isTriggerEnabled } from "~/lib/trigger";
 import { slackNewUserNotification } from "~/jobs";
+import { type Role } from "@prisma/client";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -25,7 +26,8 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      // ...other properties
+      planId: string | null;
+      role: Role;
       // role: UserRole;
     } & DefaultSession["user"];
   }
@@ -43,13 +45,22 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    session: async ({ session, user }) => {
+      const dbUser = await db.user.findUnique({
+        where: {
+          id: user.id,
+        },
+      });
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+          planId: dbUser?.planId ?? null,
+          role: dbUser?.role,
+        },
+      };
+    },
   },
   events: {
     async signIn({ user, isNewUser }) {
