@@ -37,3 +37,5 @@ export function formatDate(
 export function assertNever(x: never): never {
   throw new Error(`Unexpected object: ${JSON.stringify(x)}`);
 }
+
+export const currency = "€";

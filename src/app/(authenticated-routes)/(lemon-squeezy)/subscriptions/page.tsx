@@ -6,10 +6,10 @@ import React, { useEffect } from "react";
 import { Button } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
 import { api } from "~/trpc/react";
+import { currency } from "~/lib/utils";
 
 //lemosqueezy params
 const embed = false;
-export const currency = "€";
 const intervalLabels = {
   day: "day",
   week: "wk",

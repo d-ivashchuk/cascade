@@ -13,7 +13,7 @@ import { api } from "~/trpc/react";
 import { Button } from "~/components/ui/button";
 import { AppWindow, Banknote, CreditCard } from "lucide-react";
 import { format } from "date-fns";
-import { currency } from "~/app/(authenticated-routes)/(lemon-squeezy)/subscriptions/page";
+import { currency } from "~/lib/utils";
 
 const Billing = () => {
   const userSubscriptionQuery =

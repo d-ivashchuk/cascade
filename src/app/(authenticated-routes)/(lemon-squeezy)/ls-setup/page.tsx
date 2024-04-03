@@ -7,8 +7,8 @@ import { Badge } from "~/components/ui/badge";
 import { api } from "~/trpc/react";
 import Link from "next/link";
 import { Separator } from "~/components/ui/separator";
-import { currency } from "../subscriptions/page";
 import { Card } from "~/components/ui/card";
+import { currency } from "~/lib/utils";
 
 const Page = () => {
   const utils = api.useUtils();
