@@ -101,7 +101,7 @@ Register on Loops, get trough onboarding setup and get api key to onboarding ema
 
 ```.env
 #Loops
-LOOPS_API_KEY="d22b8f8bdf8a57f41938d5780a444b8d"
+LOOPS_API_KEY="d22b8f8bdf8a57f419fsf5780a444b8d"
 ```
 
 ## Posthog analytics
@@ -109,7 +109,7 @@ LOOPS_API_KEY="d22b8f8bdf8a57f41938d5780a444b8d"
 Register on Posthog, get trough onboarding and paste api keys:
 
 ```.env
-NEXT_PUBLIC_POSTHOG_API_KEY="phc_eKxBLltchl3KHuezun4XR88arI8nOCiMDN4WcQ6KuN9"
+NEXT_PUBLIC_POSTHOG_API_KEY="phc_eKxBLltchl3KHuezun4XR88arI8nOCisdf4WcQ6KuN9"
 NEXT_PUBLIC_POSTHOG_HOST="https://app.posthog.com"
 ```
 
