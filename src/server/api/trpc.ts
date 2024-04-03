@@ -93,6 +93,7 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
+  Sentry.setUser({ id: ctx.session.user.id });
   return next({
     ctx: {
       // infers the `session` as non-nullable

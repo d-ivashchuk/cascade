@@ -12,16 +12,17 @@ import { Card } from "~/components/ui/card";
 
 const Page = () => {
   const utils = api.useUtils();
-  const lemonSqueezyWebhookQuery = api.ls.getWebhook.useQuery();
+  const lemonSqueezyWebhookQuery = api.paymentManagement.getWebhook.useQuery();
   const lemonSqueezyProductsQuery =
-    api.ls.getProductsFromLemonSqueezy.useQuery();
+    api.paymentManagement.getProductsFromLemonSqueezy.useQuery();
   const syncProductsFromLemonsqueezyMutation =
-    api.ls.createPlansFromLemonSqueezyVariants.useMutation({
+    api.paymentManagement.createPlansFromLemonSqueezyVariants.useMutation({
       onSuccess: (data) => console.log({ data }),
     });
-  const createLemonSqueezyWebhookMutation = api.ls.createLsWebhook.useMutation({
-    onSuccess: () => utils.ls.getWebhook.invalidate(),
-  });
+  const createLemonSqueezyWebhookMutation =
+    api.paymentManagement.createLsWebhook.useMutation({
+      onSuccess: () => utils.paymentManagement.getWebhook.invalidate(),
+    });
 
   return (
     <div className="space-y-4">
