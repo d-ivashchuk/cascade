@@ -47,7 +47,12 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     >
       <TRPCReactProvider>
         <SessionProvider>
-          <PlausibleProvider domain="cascade.stackonfire.com">
+          <PlausibleProvider
+            scriptProps={{
+              src: env.NEXT_PUBLIC_PLAUSIBLE_SELFHOSTED_URL,
+            }}
+            domain={env.NEXT_PUBLIC_DEPLOYMENT_URL.replace("https://", "")}
+          >
             <PostHogProvider client={posthog}>
               <TooltipProvider>
                 <Identification>{children}</Identification>
