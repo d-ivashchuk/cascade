@@ -117,7 +117,7 @@ export const paymentManagementRouter = createTRPCRouter({
 
       console.log({
         user,
-        redirect: `${env.NEXTAUTH_URL}/billing`,
+        redirect: `${env.NEXT_PUBLIC_DEPLOYMENT_URL}/billing`,
         variant: input.variantId,
       });
 
@@ -138,7 +138,7 @@ export const paymentManagementRouter = createTRPCRouter({
             },
           },
           productOptions: {
-            redirectUrl: `${env.NEXTAUTH_URL}/billing`,
+            redirectUrl: `${env.NEXT_PUBLIC_DEPLOYMENT_URL}/billing`,
           },
           checkoutOptions: {
             embed: input.embed,
