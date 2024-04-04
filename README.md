@@ -5,6 +5,21 @@
   <h2>Open source SaaS starter kit </h2>  
 </div>
 
+# Concept
+The idea of Cascade starter kit is that it offers as little bloat as possible when it comes to technology choices. The only friction before fully working boilerplate on your `localhost:3000` is `.env` file with correct envorinmental variables. 
+
+The expected setup time for all of the tools in the toolbox is ~2 hours if you are relaxed, and you will have a service that works locally in full scope meaning that you can:
+
+- be able to login with Google & Discord
+- setup Lemon Squeezy webhooks & syncronise plans from Lemon Squeezy store with your database straight from admin management UI
+- define the limits of the usage of the features based on remaining credits, and increase credit limits for subscribed users
+- send welcome email to newly created users via Loops
+- send slack notifications to yourselfs when new users sign up or pay for the subscription
+- track bugs in Sentry with the IDs of the users connected to those
+- track users in Posthog and identify them based on their ID
+- see your business analytics with Plausible
+- manage users in the table with SUPER_ADMIN permissions
+
 # Tools
 Most of the tools selected for Cascade are open-source(OSS). Some of them are self-hosted(SH). All tools that are SaaS have generous free plans and should get you started without any additional costs.
 
