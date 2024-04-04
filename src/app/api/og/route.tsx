@@ -1,10 +1,8 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export default async function GET() {
+export async function GET() {
   const imageData = await fetch(new URL("./cascade.png", import.meta.url)).then(
     (res) => res.arrayBuffer(),
   );
