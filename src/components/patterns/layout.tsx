@@ -75,40 +75,34 @@ export async function Layout({ children }: { children: React.ReactNode }) {
           </SheetTrigger>
           <SheetContent side="left">
             <nav className="grid gap-6 text-lg font-medium">
-              <Link
-                href="#"
-                className="flex items-center gap-2 text-lg font-semibold"
-              >
-                <Package2 className="h-6 w-6" />
-                <span className="sr-only">Acme Inc</span>
-              </Link>
-              <Link href="#" className="hover:text-foreground">
-                Dashboard
-              </Link>
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Orders
-              </Link>
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Products
-              </Link>
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Customers
-              </Link>
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Analytics
-              </Link>
+              {pathname !== "/" && (
+                <>
+                  <Link
+                    href="/subscriptions"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Subscriptions
+                  </Link>
+                  <Link
+                    href="/billing"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Billing
+                  </Link>
+                  <Link
+                    href="/usage"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Usage
+                  </Link>
+                  <Link
+                    href="/user-management"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Management
+                  </Link>
+                </>
+              )}
             </nav>
           </SheetContent>
         </Sheet>
