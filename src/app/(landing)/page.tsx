@@ -28,6 +28,17 @@ export const metadata: Metadata = {
     "Kickstart your SaaS project with Cascade - open-source SaaS boilerplate. Payments, error tracking, analytics, background jobs, email marketing. All in one package.",
   openGraph: {
     url: "https://cascade.stackonfire.com",
+    title: "Cascade - open-source SaaS boilerplate",
+    description:
+      "Kickstart your SaaS project with Cascade - open-source SaaS boilerplate. Payments, error tracking, analytics, background jobs, email marketing. All in one package.",
+    images: [
+      {
+        url: "https://cascade.stackonfire.com/api/og",
+        width: 800,
+        height: 600,
+        alt: "Cascade logo",
+      },
+    ],
   },
 };
 
