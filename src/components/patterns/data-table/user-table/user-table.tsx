@@ -13,17 +13,17 @@ import {
   filterableColumns,
 } from "./user-table-columns";
 import { TableSkeleton } from "../table-skeleton";
-import { type z } from "zod";
-import { type searchParamsSchema } from "../validations";
 
-export function UserTable({
-  search,
-}: {
-  search: z.infer<typeof searchParamsSchema>;
-}) {
+import { searchParamsSchema } from "../validations";
+import { useSearchParams } from "next/navigation";
+
+export function UserTable() {
   const { enableAdvancedFilter } = useUserTable();
+  const searchParams = useSearchParams();
 
-  console.log({ search });
+  const search = searchParamsSchema.parse(
+    Object.fromEntries(searchParams.entries()),
+  );
 
   const { data, isLoading } = api.superAdmin.getUserData.useQuery(
     {
