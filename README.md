@@ -2,11 +2,11 @@
 </div>
 
 <div align="center">
-  <h2>Open source SaaS starter kit </h2>  
+  <h2>Open source SaaS template </h2>  
 </div>
 
 # Concept
-The idea of Cascade starter kit is that it offers as little bloat as possible when it comes to technology choices. The only friction before fully working boilerplate on your `localhost:3000` is `.env` file with correct envorinmental variables. 
+The idea of Cascade template is that it offers as little bloat as possible when it comes to technology choices. The only friction before fully working boilerplate on your `localhost:3000` is `.env` file with correct envorinmental variables. 
 
 The expected setup time for all of the tools in the toolbox is ~2 hours if you are relaxed, and you will have a service that works locally in full scope meaning that you can:
 
