@@ -5,6 +5,27 @@
   <h2>Open source SaaS starter kit </h2>  
 </div>
 
+# Tools
+Most of the tools selected for Cascade are open-source(OSS). Some of them are self-hosted(SH). All tools that are SaaS have generous free plans and should get you started without any additional costs.
+
+Core:
+- [T3 stack](https://create.t3.gg/)(OSS) - [Next.js](https://nextjs.org/), [tRPC](https://trpc.io/), [Prisma](https://www.prisma.io/)
+- [Postgres](https://www.postgresql.org/)(OSS) - modern & reliable database
+- [Auth.js](https://authjs.dev/)(OSS) - plug & play authentication with sessions managed in [Prisma](https://www.prisma.io/)
+
+Business:
+- [Lemon Squeezy](https://www.lemonsqueezy.com/) - modern and simple merchant of record
+- [PostHog](https://posthog.com/)(SH) - advanced user analytics & funnels
+- [Plausible](https://plausible.io/)(SH) - simple but powerful page analytics
+
+Support:
+- [Sentry](https://sentry.io/)(SH) - error & bug tracking for faster fixes
+- [Trigger.dev](https://trigger.dev/)(SH) - background job processing(send slack notifications on new user sign-up)
+- [Storybook](https://storybook.js.org/)(OSS) - manage your components & develop them in isolation
+- [Lost Pixel](https://www.lost-pixel.com/)(OSS) - simple frontend tests
+- [Crisp](https://crisp.chat/en/) - dead simple but powerful support chat
+
+
 # Quickstart guide
 
 Clone the repo:
