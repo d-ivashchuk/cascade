@@ -21,8 +21,9 @@ export function UserTable({
 }: {
   search: z.infer<typeof searchParamsSchema>;
 }) {
-  // Flags for showcasing some additional features. Feel free to remove it.
   const { enableAdvancedFilter } = useUserTable();
+
+  console.log({ search });
 
   const { data, isLoading } = api.superAdmin.getUserData.useQuery(
     {
