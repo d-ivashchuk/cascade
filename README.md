@@ -5,7 +5,7 @@
   <h2>Open source SaaS starter kit </h2>  
 </div>
 
-## Quickstart guide
+# Quickstart guide
 
 Clone the repo:
 
@@ -24,7 +24,7 @@ Copy env variables from the example:
 cp .example.env .env
 ```
 
-Be sure to populate database urls, at this stage they are most important thing to get started locally:
+Be sure to populate database urls; at this stage, they are the most important thing to get started locally:
 
 ```.env
 POSTGRES_PRISMA_URL="postgresql://admin:admin@localhost:5432/cascade_db"
@@ -97,7 +97,7 @@ LEMON_SQUEEZY_WEBHOOK_URL="https://cascade.loca.lt/api/lemon-squeezy/webhook"
 
 ## Transactional emails
 
-Register on Loops, get trough onboarding setup and get api key to onboarding emails working.
+Register on Loops, get through the onboarding setup, and get the API key to onboarding emails working.
 
 ```.env
 #Loops
@@ -106,13 +106,15 @@ LOOPS_API_KEY="d22b8f8bdf8a57f419fsf5780a444b8d"
 
 ## Posthog analytics
 
-Register on Posthog, get trough onboarding and paste api keys:
+Register on Posthog, get through onboarding, and paste API keys:
 
 ```.env
 NEXT_PUBLIC_POSTHOG_API_KEY="phc_eKxBLltchl3KHuezun4XR88arI8nOCisdf4WcQ6KuN9"
 NEXT_PUBLIC_POSTHOG_HOST="https://app.posthog.com"
 ```
 
-
-
+# Honorable mentions
+- https://github.com/lmsqueezy/nextjs-billing & [Branko's](https://twitter.com/brankoconjic) work on it; I took a bunch of ideas for LS integration there
+- https://github.com/sadmann7/shadcn-table & [Sadman](https://twitter.com/sadmann17) for showcasing brilliant integration of Tanstack table with Shadcn/ui, I repurposed the code for Prisma
+- [Pontus](https://twitter.com/pontusab) and his impeccable tech stack in [Midday.ai](https://midday.ai/) inspired me to create the boilerplate at the first place
 
