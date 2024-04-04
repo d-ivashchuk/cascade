@@ -5,6 +5,13 @@
   <h2>Open source SaaS template </h2>  
 </div>
 
+
+<p align="center">
+  <video src="https://github.com/d-ivashchuk/cascade/assets/29632358/4215a129-f6b8-4bbc-8723-1666fe5327aa" width=400/>
+<p/>
+
+
+
 # Concept
 The idea of Cascade template is that it offers as little bloat as possible when it comes to technology choices. The only friction before fully working boilerplate on your `localhost:3000` is `.env` file with correct envorinmental variables. 
 
