@@ -47,7 +47,9 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     >
       <TRPCReactProvider>
         <SessionProvider>
-          <PlausibleProvider domain={env.NEXT_PUBLIC_DEPLOYMENT_URL}>
+          <PlausibleProvider
+            domain={env.NEXT_PUBLIC_DEPLOYMENT_URL.replace("https://", "")}
+          >
             <PostHogProvider client={posthog}>
               <TooltipProvider>
                 <Identification>{children}</Identification>
