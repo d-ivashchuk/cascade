@@ -115,6 +115,12 @@ export const paymentManagementRouter = createTRPCRouter({
 
       const user = ctx.session?.user;
 
+      console.log({
+        user,
+        redirect: `${env.NEXTAUTH_URL}/billing`,
+        variant: input.variantId,
+      });
+
       if (!env.LEMON_SQUEEZY_STORE_ID) {
         throw new Error(
           "Missing required LEMON_SQUEEZY_STORE_ID env variable. Please, set it in your .env file.",
