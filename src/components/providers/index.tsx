@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import posthog from "posthog-js";
 import { PostHogProvider, usePostHog } from "posthog-js/react";
 import { SessionProvider, useSession } from "next-auth/react";
+import PlausibleProvider from "next-plausible";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { env } from "~/env.mjs";
@@ -46,11 +47,13 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     >
       <TRPCReactProvider>
         <SessionProvider>
-          <PostHogProvider client={posthog}>
-            <TooltipProvider>
-              <Identification>{children}</Identification>
-            </TooltipProvider>
-          </PostHogProvider>
+          <PlausibleProvider domain={env.NEXT_PUBLIC_DEPLOYMENT_URL}>
+            <PostHogProvider client={posthog}>
+              <TooltipProvider>
+                <Identification>{children}</Identification>
+              </TooltipProvider>
+            </PostHogProvider>
+          </PlausibleProvider>
         </SessionProvider>
       </TRPCReactProvider>
     </ThemeProvider>
