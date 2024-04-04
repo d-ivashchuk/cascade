@@ -16,8 +16,10 @@ import LoginLogoutButton from "./login-logout-button";
 import UserButton from "./user-button";
 import { ColorModeSwitch } from "./color-mode-switch";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export async function Layout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -27,34 +29,38 @@ export async function Layout({ children }: { children: React.ReactNode }) {
             width={40}
             height={40}
             alt="cascade logo"
-            className=" hidden h-20 w-20  md:block"
+            className=" hidden md:block"
           />
         </Link>
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-          <Link
-            href="/subscriptions"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Subscriptions
-          </Link>
-          <Link
-            href="/billing"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Billing
-          </Link>
-          <Link
-            href="/usage"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Usage
-          </Link>
-          <Link
-            href="/user-management"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Management
-          </Link>
+          {pathname !== "/" && (
+            <>
+              <Link
+                href="/subscriptions"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Subscriptions
+              </Link>
+              <Link
+                href="/billing"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Billing
+              </Link>
+              <Link
+                href="/usage"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Usage
+              </Link>
+              <Link
+                href="/user-management"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Management
+              </Link>
+            </>
+          )}
         </nav>
         <Sheet>
           <SheetTrigger asChild>
