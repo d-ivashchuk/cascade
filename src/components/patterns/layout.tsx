@@ -64,14 +64,24 @@ export async function Layout({ children }: { children: React.ReactNode }) {
         </nav>
         <Sheet>
           <SheetTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="shrink-0 md:hidden"
-            >
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle navigation menu</span>
-            </Button>
+            {pathname === "/" ? (
+              <Image
+                src="/cd.svg"
+                width={40}
+                height={40}
+                alt="cascade logo"
+                className="shrink-0 md:hidden"
+              />
+            ) : (
+              <Button
+                variant="outline"
+                size="icon"
+                className="shrink-0 md:hidden"
+              >
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle navigation menu</span>
+              </Button>
+            )}
           </SheetTrigger>
           <SheetContent side="left">
             <nav className="grid gap-6 text-lg font-medium">
