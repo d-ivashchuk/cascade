@@ -12,6 +12,7 @@ export interface UserManagementPageProps {
 
 const UserManagement = ({ searchParams }: UserManagementPageProps) => {
   const search = searchParamsSchema.parse(searchParams);
+  console.log({ parsedSearch: search, searchParams });
 
   return (
     <div>
