@@ -20,7 +20,9 @@ export function LoginScreen() {
           <div className="grid gap-4">
             <Button
               onClick={() =>
-                signIn("discord", { callbackUrl: "/?loginState=signedIn" })
+                signIn("discord", {
+                  callbackUrl: "/subscriptions/?loginState=signedIn",
+                })
               }
               variant="outline"
               className="w-full"
@@ -30,7 +32,9 @@ export function LoginScreen() {
             </Button>
             <Button
               onClick={() =>
-                signIn("google", { callbackUrl: "/?loginState=signedIn" })
+                signIn("google", {
+                  callbackUrl: "subscriptions/?loginState=signedIn",
+                })
               }
               variant="outline"
               className="w-full"

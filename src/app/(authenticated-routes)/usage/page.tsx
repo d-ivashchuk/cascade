@@ -23,7 +23,7 @@ const Usage = () => {
       {getUsageForUserQuery.data && (
         <div className="mb-4">
           <p>
-            Monthly credits available: <b>{plan?.credits}</b>
+            Monthly credits available: <b>{plan?.credits ?? 50}</b>
           </p>
           <p>
             Credits spent today:{" "}

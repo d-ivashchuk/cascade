@@ -10,6 +10,8 @@ import {
   SiTrpc,
 } from "@icons-pack/react-simple-icons";
 
+import { type Metadata } from "next";
+
 import LsLogo from "./ls-logo";
 import { Button } from "~/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "~/components/ui/tabs";
@@ -18,6 +20,16 @@ import { Terminal } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "~/components/ui/alert";
 import { Separator } from "~/components/ui/separator";
 import Image from "next/image";
+import VideoComponent from "./video-component";
+
+export const metadata: Metadata = {
+  title: "Cascade - open-source SaaS boilerplate",
+  description:
+    "Kickstart your SaaS project with Cascade - open-source SaaS boilerplate. Payments, error tracking, analytics, background jobs, email marketing. All in one package.",
+  openGraph: {
+    url: "https://cascade.stackonfire.com",
+  },
+};
 
 const Logos = () => {
   return (
@@ -53,7 +65,7 @@ const Logos = () => {
   );
 };
 
-export default async function Home() {
+export default function Home() {
   return (
     <div className="px-4">
       <Image
@@ -61,7 +73,7 @@ export default async function Home() {
         width={100}
         height={100}
         alt="cascade logo"
-        className=" mx-auto mb-4 rounded-md md:block"
+        className=" mx-auto mb-4 rounded-md md:block "
       />
       <div className="mb-4 flex flex-col justify-center text-center align-middle">
         <div className="mb-4">
@@ -94,6 +106,8 @@ export default async function Home() {
           </ul>
         </div>
       </div>
+
+      <VideoComponent />
 
       <div className="mx-auto max-w-4xl">
         <div className="my-16">

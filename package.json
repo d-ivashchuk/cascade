@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.4.0",
+    "@cloudflare/stream-react": "^1.9.1",
     "@icons-pack/react-simple-icons": "^9.4.0",
     "@lemonsqueezy/lemonsqueezy.js": "^2.2.0",
     "@prisma/client": "^5.10.2",

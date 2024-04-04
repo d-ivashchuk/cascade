@@ -33,7 +33,7 @@ export function UpgradeDialog({
         <DialogFooter>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
 
-          <Link href="/billing">
+          <Link href="/subscriptions">
             <Button>Upgrade Now</Button>
           </Link>
         </DialogFooter>
