@@ -1,5 +1,6 @@
 import { type Prisma } from "@prisma/client";
 import { z } from "zod";
+import { env } from "~/env.mjs";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
@@ -29,7 +30,10 @@ export const superAdminRouter = createTRPCRouter({
         to,
       } = input;
 
-      if (ctx.session.user.role !== "SUPER_ADMIN") {
+      if (
+        ctx.session.user.role !== "SUPER_ADMIN" &&
+        env.CASCADE_DEMO !== "true"
+      ) {
         throw new Error("Unauthorized access to the resource");
       }
 
@@ -88,6 +92,12 @@ export const superAdminRouter = createTRPCRouter({
       if (planId) {
         const planIds = planId.split(".");
         where.planId = { in: planIds.map((id) => parseInt(id, 10)) };
+      }
+
+      if (env.CASCADE_DEMO === "true") {
+        where.id = {
+          contains: "DEMO_USER",
+        };
       }
 
       const data = await ctx.db.user.findMany({

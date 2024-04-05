@@ -17,6 +17,7 @@ async function main() {
     userPromises.push(
       prisma.user.create({
         data: {
+          id: `DEMO_USER_${i}`,
           name: name,
           email: email,
           // Adjust the role, createdAt, updatedAt as per your requirements

@@ -55,6 +55,7 @@ export const env = createEnv({
     LEMON_SQUEEZY_STORE_ID: z.string().optional(),
     LEMON_SQUEEZY_WEBHOOK_SECRET: z.string().optional(),
     LEMON_SQUEEZY_WEBHOOK_URL: z.string().optional(),
+    CASCADE_DEMO: z.string().optional(),
   },
 
   /**
@@ -101,6 +102,7 @@ export const env = createEnv({
     NEXT_PUBLIC_DEPLOYMENT_URL: process.env.NEXT_PUBLIC_DEPLOYMENT_URL,
     NEXT_PUBLIC_PLAUSIBLE_SELFHOSTED_URL:
       process.env.NEXT_PUBLIC_PLAUSIBLE_SELFHOSTED_URL,
+    CASCADE_DEMO: process.env.CASCADE_DEMO,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

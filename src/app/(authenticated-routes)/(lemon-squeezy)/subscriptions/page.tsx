@@ -1,5 +1,5 @@
 "use client";
-import { Loader2 } from "lucide-react";
+import { Loader2, TestTube2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import React, { useEffect } from "react";
@@ -7,6 +7,8 @@ import { Button } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
 import { api } from "~/trpc/react";
 import { currency } from "~/lib/utils";
+import { Alert, AlertTitle, AlertDescription } from "~/components/ui/alert";
+import { Separator } from "~/components/ui/separator";
 
 //lemosqueezy params
 const embed = false;
@@ -40,7 +42,38 @@ const Subscriptions = () => {
 
   return (
     <>
-      <h1 className="text-2xl">Subscriptions</h1>
+      <div>
+        <h1 className="mb-2 text-2xl">Subscriptions</h1>
+        <h2 className="text-md text-muted-foreground">
+          On this screen you see the availabe subscriptions from Lemon Squeezy
+          that user can choose from.
+          <br />
+          You need to create them first in the{" "}
+          <Link
+            className="underline"
+            href="https://app.lemonsqueezy.com/products"
+            target="_blank"
+          >
+            Lemon Squeezy dashboard
+          </Link>
+          <br />
+          Sync them up in database on{" "}
+          <Link className="underline" href="/ls-setup">
+            Lemon Squeezy setup page
+          </Link>{" "}
+          and then you can see them here.
+        </h2>
+        <Alert className="mt-4">
+          <TestTube2 className="h-4 w-4" />
+          <AlertTitle>Important</AlertTitle>
+          <AlertDescription>
+            You can test out the subscriptions, select one you would like to try
+            & input <code>4242 4242 4242 4242</code> card number with any future
+            date and any CVC code.
+          </AlertDescription>
+        </Alert>
+      </div>
+      <Separator />
       <div>
         {productByIdQuery.isLoading && userSubscriptionsQuery.isLoading && (
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">

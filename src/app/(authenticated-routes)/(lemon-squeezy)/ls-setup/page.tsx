@@ -1,5 +1,5 @@
 "use client";
-import { LinkIcon, Loader2 } from "lucide-react";
+import { AlertCircle, LinkIcon, Loader2 } from "lucide-react";
 import React from "react";
 import { Button } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Separator } from "~/components/ui/separator";
 import { Card } from "~/components/ui/card";
 import { currency } from "~/lib/utils";
+import { Alert, AlertTitle, AlertDescription } from "~/components/ui/alert";
 
 const Page = () => {
   const utils = api.useUtils();
@@ -26,7 +27,20 @@ const Page = () => {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl">Lemon Squeezy setup</h1>
+      <div>
+        <h1 className="text-2xl">Lemon Squeezy setup</h1>
+        <Alert className="mt-4 max-w-4xl">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Important</AlertTitle>
+          <AlertDescription>
+            This view is avaialbe to anyone for demo purposes. If you are
+            cloning Cascade you might want to restrict access to this page.
+            <br />
+            Any actions on this page are restricted to <b>SUPER_ADMIN</b> role
+            only, change your role in the database to access this page.
+          </AlertDescription>
+        </Alert>
+      </div>
       <Separator />
       <h2 className="text-xl">Webhook setup</h2>
       <p>

@@ -1,10 +1,13 @@
 "use client";
+import { Separator } from "~/components/ui/separator";
 import { Loader2 } from "lucide-react";
 import React from "react";
 import { UpgradeDialog } from "~/components/patterns/upgrade-dialog";
 import { Button } from "~/components/ui/button";
 import useGuardedSpendCredits from "~/hooks/use-guard-usage";
 import { api } from "~/trpc/react";
+import Link from "next/link";
+import { Skeleton } from "~/components/ui/skeleton";
 
 const Usage = () => {
   const guardedUsage = useGuardedSpendCredits();
@@ -16,9 +19,24 @@ const Usage = () => {
 
   return (
     <div>
-      <h1 className="mb-4 text-2xl">Usage</h1>
+      <div>
+        <h1 className="mb-2 text-2xl">Usage</h1>
+        <h2 className="text-md text-muted-foreground">
+          On this screen you can see the usage of the credits. After you set up
+          your plans via{" "}
+          <Link className="underline" href="/ls-setup">
+            Lemon Squeezy setup page
+          </Link>{" "}
+          you need to modify the credits directly in the database.
+        </h2>
+      </div>
+      <Separator className="my-4" />
       {getUsageForUserQuery.isLoading && (
-        <Loader2 className="h-4 w-4 animate-spin" />
+        <div className="flex flex-col gap-2">
+          <Skeleton className="h-[20px] max-w-md" />
+          <Skeleton className="h-[20px] max-w-md" />
+          <Skeleton className="h-[20px] max-w-md" />
+        </div>
       )}
       {getUsageForUserQuery.data && (
         <div className="mb-4">

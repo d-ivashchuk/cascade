@@ -14,6 +14,7 @@ import { Button } from "~/components/ui/button";
 import { AppWindow, Banknote, CreditCard } from "lucide-react";
 import { format } from "date-fns";
 import { currency } from "~/lib/utils";
+import { Separator } from "~/components/ui/separator";
 
 const Billing = () => {
   const userSubscriptionQuery =
@@ -26,7 +27,14 @@ const Billing = () => {
 
   return (
     <div>
-      <h1 className="mb-4 text-2xl">Billing</h1>
+      <div>
+        <h1 className="mb-2 text-2xl">Billing</h1>
+        <h2 className="text-md text-muted-foreground">
+          On this screen you see the active subscriptions and one time orders.
+          These are coming from the database already.
+        </h2>
+      </div>
+      <Separator className="my-4" />
 
       <div className="mb-2 flex gap-2">
         {userSubscriptionQuery.isLoading && (

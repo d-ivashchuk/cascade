@@ -149,14 +149,17 @@ export const paymentManagementRouter = createTRPCRouter({
       return checkout;
     }),
 
-  createLsWebhook: protectedProcedure.mutation(async () => {
+  createLsWebhook: protectedProcedure.mutation(async ({ ctx }) => {
     lemonSqueezySetup({
       apiKey: env.LEMON_SQUEEZY_API_KEY,
       onError(error) {
         console.log(error);
       },
     });
-    console.log({ env });
+
+    if (ctx.session.user.role !== "SUPER_ADMIN") {
+      throw new Error("Unauthorized access to the resource");
+    }
 
     if (!env.LEMON_SQUEEZY_WEBHOOK_URL) {
       throw new Error(
@@ -190,6 +193,10 @@ export const paymentManagementRouter = createTRPCRouter({
   }),
   createPlansFromLemonSqueezyVariants: protectedProcedure.mutation(
     async ({ ctx }) => {
+      if (ctx.session.user.role !== "SUPER_ADMIN") {
+        throw new Error("Unauthorized access to the resource");
+      }
+
       setupLemonSqueezy();
 
       // Fetch variants from Lemon Squeezy
