@@ -26,6 +26,7 @@ export const metadata: Metadata = {
   title: "Cascade - open-source SaaS boilerplate",
   description:
     "Kickstart your SaaS project with Cascade - open-source SaaS boilerplate. Payments, error tracking, analytics, background jobs, email marketing. All in one package.",
+  icons: { aslk: 123 },
   openGraph: {
     url: "https://cascade.stackonfire.com",
     title: "Cascade - open-source SaaS boilerplate",
@@ -106,11 +107,11 @@ export default function Home() {
       </div>
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto mt-4 inline-flex w-full  flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-200px),transparent_100%)]">
-          <ul className="animate-infinite-scroll flex items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8">
+          <ul className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8">
             <Logos />
           </ul>
           <ul
-            className="animate-infinite-scroll flex items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8"
+            className="flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8"
             aria-hidden="true"
           >
             <Logos />
