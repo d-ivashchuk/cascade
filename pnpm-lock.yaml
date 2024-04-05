@@ -79,16 +79,16 @@ dependencies:
     version: 2.3.18
   '@trpc/client':
     specifier: next
-    version: 11.0.0-rc.330(@trpc/server@11.0.0-rc.330)
+    version: 11.0.0-rc.332(@trpc/server@11.0.0-rc.332)
   '@trpc/next':
     specifier: next
-    version: 11.0.0-rc.330(@tanstack/react-query@5.28.6)(@trpc/client@11.0.0-rc.330)(@trpc/react-query@11.0.0-rc.330)(@trpc/server@11.0.0-rc.330)(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)
+    version: 11.0.0-rc.332(@tanstack/react-query@5.28.6)(@trpc/client@11.0.0-rc.332)(@trpc/react-query@11.0.0-rc.332)(@trpc/server@11.0.0-rc.332)(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)
   '@trpc/react-query':
     specifier: next
-    version: 11.0.0-rc.330(@tanstack/react-query@5.28.6)(@trpc/client@11.0.0-rc.330)(@trpc/server@11.0.0-rc.330)(react-dom@18.2.0)(react@18.2.0)
+    version: 11.0.0-rc.332(@tanstack/react-query@5.28.6)(@trpc/client@11.0.0-rc.332)(@trpc/server@11.0.0-rc.332)(react-dom@18.2.0)(react@18.2.0)
   '@trpc/server':
     specifier: next
-    version: 11.0.0-rc.330
+    version: 11.0.0-rc.332
   class-variance-authority:
     specifier: ^0.7.0
     version: 0.7.0
@@ -149,6 +149,9 @@ dependencies:
   tailwindcss-animate:
     specifier: ^1.0.7
     version: 1.0.7(tailwindcss@3.4.1)
+  usehooks-ts:
+    specifier: ^3.1.0
+    version: 3.1.0(react@18.2.0)
   uvcanvas:
     specifier: ^0.2.1
     version: 0.2.1(@types/react@18.2.62)(react-dom@18.2.0)(react@18.2.0)
@@ -4565,21 +4568,21 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@trpc/client@11.0.0-rc.330(@trpc/server@11.0.0-rc.330):
-    resolution: {integrity: sha512-7Z0Ty5BZgWm8SgDMh2Me+WoBOqHoB938S2lK7d5bK8jMwiatGeUpAOaOJ1047rCqnLSEPXYfy8ylaTOrfaLr3Q==}
+  /@trpc/client@11.0.0-rc.332(@trpc/server@11.0.0-rc.332):
+    resolution: {integrity: sha512-f9vpTwAZWI5VvbLDq22nzQI94Pe7nlt/SJH2PC/KzOheNoSxm+CoQ1PjriMPUePr69GjxG0OOGH8RDWG+vseKw==}
     peerDependencies:
-      '@trpc/server': 11.0.0-rc.330+c89fb11f2
+      '@trpc/server': 11.0.0-rc.332+67c093749
     dependencies:
-      '@trpc/server': 11.0.0-rc.330
+      '@trpc/server': 11.0.0-rc.332
     dev: false
 
-  /@trpc/next@11.0.0-rc.330(@tanstack/react-query@5.28.6)(@trpc/client@11.0.0-rc.330)(@trpc/react-query@11.0.0-rc.330)(@trpc/server@11.0.0-rc.330)(next@14.1.4)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-pXza0X0gGpBzt4zhq7bhMg8KFsNr5ajK3wi/0npkmt8DImZwBKf7A6Tkloxh1qB331Qu7onhEfZoR3gTGbp5Rg==}
+  /@trpc/next@11.0.0-rc.332(@tanstack/react-query@5.28.6)(@trpc/client@11.0.0-rc.332)(@trpc/react-query@11.0.0-rc.332)(@trpc/server@11.0.0-rc.332)(next@14.1.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-TvnPDCNravfskMh3LTgVVonvKdwFkMYCp8ltaiDEMHroNYZKlf5A7nAdKlXG7hk8UYhvTJb7iG2/IRJCy8n3pw==}
     peerDependencies:
       '@tanstack/react-query': ^5.25.0
-      '@trpc/client': 11.0.0-rc.330+c89fb11f2
-      '@trpc/react-query': 11.0.0-rc.330+c89fb11f2
-      '@trpc/server': 11.0.0-rc.330+c89fb11f2
+      '@trpc/client': 11.0.0-rc.332+67c093749
+      '@trpc/react-query': 11.0.0-rc.332+67c093749
+      '@trpc/server': 11.0.0-rc.332+67c093749
       next: '*'
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -4590,32 +4593,32 @@ packages:
         optional: true
     dependencies:
       '@tanstack/react-query': 5.28.6(react@18.2.0)
-      '@trpc/client': 11.0.0-rc.330(@trpc/server@11.0.0-rc.330)
-      '@trpc/react-query': 11.0.0-rc.330(@tanstack/react-query@5.28.6)(@trpc/client@11.0.0-rc.330)(@trpc/server@11.0.0-rc.330)(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/server': 11.0.0-rc.330
+      '@trpc/client': 11.0.0-rc.332(@trpc/server@11.0.0-rc.332)
+      '@trpc/react-query': 11.0.0-rc.332(@tanstack/react-query@5.28.6)(@trpc/client@11.0.0-rc.332)(@trpc/server@11.0.0-rc.332)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/server': 11.0.0-rc.332
       next: 14.1.4(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@trpc/react-query@11.0.0-rc.330(@tanstack/react-query@5.28.6)(@trpc/client@11.0.0-rc.330)(@trpc/server@11.0.0-rc.330)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-qkAu+xxPE4dN8osBdsQNMzdEdZw6S5KnGR0WH7sCG0Rx0R0ynH0QBxlmWfhiKTXkKd1yGHIkBlN4EB2bQJ64lw==}
+  /@trpc/react-query@11.0.0-rc.332(@tanstack/react-query@5.28.6)(@trpc/client@11.0.0-rc.332)(@trpc/server@11.0.0-rc.332)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-9+jhHg2xLJo3ig3YkgQvHmS1VgcQOXqOQRI23gpXxEfEkuObi0lELowiKFoFI6aua2Tm04tzfD5AWFctJwroDQ==}
     peerDependencies:
       '@tanstack/react-query': ^5.25.0
-      '@trpc/client': 11.0.0-rc.330+c89fb11f2
-      '@trpc/server': 11.0.0-rc.330+c89fb11f2
+      '@trpc/client': 11.0.0-rc.332+67c093749
+      '@trpc/server': 11.0.0-rc.332+67c093749
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
     dependencies:
       '@tanstack/react-query': 5.28.6(react@18.2.0)
-      '@trpc/client': 11.0.0-rc.330(@trpc/server@11.0.0-rc.330)
-      '@trpc/server': 11.0.0-rc.330
+      '@trpc/client': 11.0.0-rc.332(@trpc/server@11.0.0-rc.332)
+      '@trpc/server': 11.0.0-rc.332
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@trpc/server@11.0.0-rc.330:
-    resolution: {integrity: sha512-fGVgu+w/ZUD3OmM1VjoeaMYZ7ZZicBSP+BbiR11A7tGh66IYuLquvPqNAT5ac3hrE/mJgYq1SMBBR321Z+YTfw==}
+  /@trpc/server@11.0.0-rc.332:
+    resolution: {integrity: sha512-K+cyJm2MmD4uxhfcMH0oHl/KNy8J23h/Bl9nisWOjjtYjNB6fTiO35uTuN8+CkKfXjc+873snT2QyaQXwjp1SA==}
     dev: false
 
   /@tsconfig/node10@1.0.10:
@@ -9079,7 +9082,6 @@ packages:
 
   /lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
-    dev: true
 
   /lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
@@ -12352,6 +12354,16 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
+      react: 18.2.0
+    dev: false
+
+  /usehooks-ts@3.1.0(react@18.2.0):
+    resolution: {integrity: sha512-bBIa7yUyPhE1BCc0GmR96VU/15l/9gP1Ch5mYdLcFBaFGQsdmXkvjV0TtOqW1yUd6VjIwDunm+flSciCQXujiw==}
+    engines: {node: '>=16.15.0'}
+    peerDependencies:
+      react: ^16.8.0  || ^17 || ^18
+    dependencies:
+      lodash.debounce: 4.0.8
       react: 18.2.0
     dev: false
 

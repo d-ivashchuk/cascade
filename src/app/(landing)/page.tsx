@@ -9,6 +9,7 @@ import {
   SiTailwindcss,
   SiTrpc,
 } from "@icons-pack/react-simple-icons";
+import { useCopyToClipboard } from "usehooks-ts";
 
 import { type Metadata } from "next";
 
@@ -21,12 +22,15 @@ import { Alert, AlertTitle, AlertDescription } from "~/components/ui/alert";
 import { Separator } from "~/components/ui/separator";
 import Image from "next/image";
 import VideoComponent from "./video-component";
+import { Badge } from "~/components/ui/badge";
+import { toast } from "sonner";
+import CloneRepoBadge from "./clone-repo-badge";
 
 export const metadata: Metadata = {
-  title: "Cascade - open-source SaaS boilerplate",
+  title: "Cascade -  free open-source SaaS boilerplate",
   description:
     "Kickstart your SaaS project with Cascade - open-source SaaS boilerplate. Payments, error tracking, analytics, background jobs, email marketing. All in one package.",
-  icons: { aslk: 123 },
+  icons: [{ rel: "icon", url: "/favicon.ico" }],
   openGraph: {
     url: "https://cascade.stackonfire.com",
     title: "Cascade - open-source SaaS boilerplate",
@@ -91,7 +95,8 @@ export default function Home() {
         <div className="mb-4">
           <h1 className="mb-2 text-4xl font-bold uppercase">Cascade</h1>
           <h2 className="text-xl text-muted-foreground">
-            Setup production grade SaaS project in minutes instead of days
+            Free and <b>open-source</b> SaaS boilerplate. <br /> Start writing
+            your business logic from day 1.
           </h2>
         </div>
         <div className="flex gap-2 self-center align-middle">
@@ -104,6 +109,7 @@ export default function Home() {
             </Button>
           </Link>
         </div>
+        <CloneRepoBadge />
       </div>
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto mt-4 inline-flex w-full  flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-200px),transparent_100%)]">
