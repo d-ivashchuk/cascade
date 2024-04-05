@@ -9,7 +9,6 @@ import {
   SiTailwindcss,
   SiTrpc,
 } from "@icons-pack/react-simple-icons";
-import { useCopyToClipboard } from "usehooks-ts";
 
 import { type Metadata } from "next";
 
@@ -22,8 +21,7 @@ import { Alert, AlertTitle, AlertDescription } from "~/components/ui/alert";
 import { Separator } from "~/components/ui/separator";
 import Image from "next/image";
 import VideoComponent from "./video-component";
-import { Badge } from "~/components/ui/badge";
-import { toast } from "sonner";
+
 import CloneRepoBadge from "./clone-repo-badge";
 
 export const metadata: Metadata = {
