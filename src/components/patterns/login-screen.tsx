@@ -1,16 +1,19 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { Novatrix } from "uvcanvas";
+import { Novatrix, Zenitho } from "uvcanvas";
 import { SiDiscord, SiGoogle } from "@icons-pack/react-simple-icons";
 
 import { Button } from "~/components/ui/button";
 
 export function LoginScreen() {
   return (
-    <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+    <div className="min-h-[800px] w-full lg:grid lg:grid-cols-2">
       <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
+        <div className="absolute inset-0 block lg:hidden [&_canvas]:h-[100vh]">
+          <Zenitho />
+        </div>
+        <div className="relative mx-auto  grid w-[350px] gap-6 rounded-lg bg-background px-4 py-8">
           <div className="grid gap-2 text-center">
             <h1 className="text-3xl font-bold">Login</h1>
             <p className="text-balance text-muted-foreground">
