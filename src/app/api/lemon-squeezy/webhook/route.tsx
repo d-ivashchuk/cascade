@@ -92,7 +92,6 @@ export async function POST(request: Request) {
       case "order_created":
         const orderData = data.data.attributes as LemonsqueezyOrderAttributes;
         if (orderData.status === "paid") {
-          console.log(JSON.stringify(orderData, null, 2));
           await db.oneTimePurchase.create({
             data: {
               userId: userIdInDatabase,

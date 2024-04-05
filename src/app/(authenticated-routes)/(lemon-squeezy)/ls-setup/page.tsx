@@ -18,7 +18,8 @@ const Page = () => {
     api.paymentManagement.getProductsFromLemonSqueezy.useQuery();
   const syncProductsFromLemonsqueezyMutation =
     api.paymentManagement.createPlansFromLemonSqueezyVariants.useMutation({
-      onSuccess: (data) => console.log({ data }),
+      onSuccess: () =>
+        utils.paymentManagement.getProductsFromLemonSqueezy.invalidate(),
     });
   const createLemonSqueezyWebhookMutation =
     api.paymentManagement.createLsWebhook.useMutation({

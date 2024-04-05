@@ -8,7 +8,6 @@ import {
 import {
   createCheckout,
   createWebhook,
-  getProduct,
   getVariant,
   lemonSqueezySetup,
   listProducts,
@@ -37,7 +36,7 @@ export async function hasWebhook() {
 
   // Check if a webhook exists on Lemon Squeezy.
   const allWebhooks = await listWebhooks({
-    filter: { storeId: process.env.LEMONSQUEEZY_STORE_ID },
+    filter: { storeId: process.env.LEMON_SQUEEZY_STORE_ID },
   });
 
   // Check if WEBHOOK_URL ends with a slash. If not, add it.
@@ -75,34 +74,23 @@ export const paymentManagementRouter = createTRPCRouter({
 
     return { subscription, variant, plan };
   }),
-  getProductById: publicProcedure
-    .input(
-      z.object({
-        productId: z.string(),
-        hideDefaultVariant: z.boolean().optional(),
-      }),
-    )
-    .query(async ({ input }) => {
-      setupLemonSqueezy();
-      const getProductQuery = await getProduct(input.productId);
-      const getProductVariantsQuery = await listVariants({
-        filter: { productId: input.productId },
-      });
+  getVariantsForStore: publicProcedure.query(async () => {
+    setupLemonSqueezy();
+    const getProducts = await listProducts({
+      filter: {
+        storeId: Number(env.LEMON_SQUEEZY_STORE_ID),
+      },
+    });
+    const getProductVariantsQuery = await listVariants({
+      filter: { productId: getProducts.data?.data[0]?.id },
+    });
 
-      const variants = getProductVariantsQuery.data?.data.filter((variant) => {
-        if (input.hideDefaultVariant) {
-          return variant.attributes.status !== "pending";
-        }
-        return true;
-      });
+    const variants = getProductVariantsQuery.data?.data;
 
-      const product = getProductQuery.data;
-
-      return {
-        product,
-        variants,
-      };
-    }),
+    return {
+      variants,
+    };
+  }),
   createCheckoutForVariant: publicProcedure
     .input(
       z.object({
@@ -114,12 +102,6 @@ export const paymentManagementRouter = createTRPCRouter({
       setupLemonSqueezy();
 
       const user = ctx.session?.user;
-
-      console.log({
-        user,
-        redirect: `${env.NEXT_PUBLIC_DEPLOYMENT_URL}/billing`,
-        variant: input.variantId,
-      });
 
       if (!env.LEMON_SQUEEZY_STORE_ID) {
         throw new Error(
@@ -200,8 +182,14 @@ export const paymentManagementRouter = createTRPCRouter({
       setupLemonSqueezy();
 
       // Fetch variants from Lemon Squeezy
-      const variantsResponse = await listVariants(); // Adjust to use the correct parameters/filters as necessary
-      const variants = variantsResponse.data?.data;
+      const products = await listProducts({
+        filter: { storeId: Number(env.LEMON_SQUEEZY_STORE_ID) },
+        include: ["variants"],
+      });
+
+      const variants = products.data?.data.flatMap(
+        (product) => product.relationships.variants,
+      )[0]?.data;
 
       if (!variants) {
         throw new Error("Failed to fetch variants from Lemon Squeezy.");
@@ -220,7 +208,8 @@ export const paymentManagementRouter = createTRPCRouter({
             return await ctx.db.plan.create({
               data: {
                 lemonSqueezyVariantId: variant.id, // Assuming this is the correct mapping
-                name: variant.attributes.name,
+                //FIX: need to add name field like it was
+                name: variant.id,
               },
             });
           }
@@ -235,7 +224,9 @@ export const paymentManagementRouter = createTRPCRouter({
   getProductsFromLemonSqueezy: protectedProcedure.query(async ({ ctx }) => {
     setupLemonSqueezy();
 
-    const products = await listProducts();
+    const products = await listProducts({
+      filter: { storeId: Number(env.LEMON_SQUEEZY_STORE_ID) },
+    });
     const variants = await listVariants();
 
     // Fetch all plans from the database to check against the variants

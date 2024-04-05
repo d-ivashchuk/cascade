@@ -32,11 +32,8 @@ const Subscriptions = () => {
     }
   }, []);
 
-  const productByIdQuery = api.paymentManagement.getProductById.useQuery({
-    productId: "235208",
-    hideDefaultVariant: true,
-  });
-  const storeId = productByIdQuery.data?.product?.data.attributes.store_id;
+  const storeVariantsQuery =
+    api.paymentManagement.getVariantsForStore.useQuery();
   const createCheckoutForVariantMutation =
     api.paymentManagement.createCheckoutForVariant.useMutation();
 
@@ -75,7 +72,7 @@ const Subscriptions = () => {
       </div>
       <Separator />
       <div>
-        {productByIdQuery.isLoading && userSubscriptionsQuery.isLoading && (
+        {storeVariantsQuery.isLoading && userSubscriptionsQuery.isLoading && (
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <Skeleton className="h-[180px] w-full" />
             <Skeleton className="h-[180px] w-full" />
@@ -91,7 +88,7 @@ const Subscriptions = () => {
           </h1>
         ) : (
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {productByIdQuery.data?.variants?.map((variant) => (
+            {storeVariantsQuery.data?.variants?.map((variant) => (
               <div
                 key={variant.id}
                 className="divide-y divide-slate-200 rounded-lg border border-b shadow-sm"
@@ -114,24 +111,22 @@ const Subscriptions = () => {
                   <Button
                     disabled={createCheckoutForVariantMutation.isPending}
                     onClick={() => {
-                      if (storeId) {
-                        createCheckoutForVariantMutation.mutate(
-                          {
-                            variantId: variant.id,
-                            embed,
+                      createCheckoutForVariantMutation.mutate(
+                        {
+                          variantId: variant.id,
+                          embed,
+                        },
+                        {
+                          onSuccess: (checkout) => {
+                            const checkoutUrl =
+                              checkout.data?.data.attributes.url;
+                            embed
+                              ? checkoutUrl &&
+                                window.LemonSqueezy.Url.Open(checkoutUrl)
+                              : router.push(checkoutUrl ?? "/");
                           },
-                          {
-                            onSuccess: (checkout) => {
-                              const checkoutUrl =
-                                checkout.data?.data.attributes.url;
-                              embed
-                                ? checkoutUrl &&
-                                  window.LemonSqueezy.Url.Open(checkoutUrl)
-                                : router.push(checkoutUrl ?? "/");
-                            },
-                          },
-                        );
-                      }
+                        },
+                      );
                     }}
                     className="w-full"
                   >
