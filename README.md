@@ -4,6 +4,21 @@
 <div align="center">
   <h2>Open source SaaS template </h2>  
 </div>
+<div align='center'>
+  <a href='https://cascade.stackonfire.com' target='_blank'>
+    Visit Cascade 📦
+  </a> 
+  |||
+    <a href='https://cascade.stackonfire.com/login' target='_blank'>
+Try out the demo here 🎮
+  </a>  
+  |||
+    <a href='https://stackonfire.mintlify.app/introduction' target='_blank'>
+Explore the documentation 📄
+  </a>  
+</div>
+
+
 
 <p align="center">
   <video src="https://github.com/d-ivashchuk/cascade/assets/29632358/4215a129-f6b8-4bbc-8723-1666fe5327aa" width="400">
@@ -11,7 +26,14 @@
 
 # Concept
 
-The idea of Cascade template is that it offers as little bloat as possible when it comes to technology choices. The only friction before fully working boilerplate on your `localhost:3000` is `.env` file with correct envorinmental variables.
+The idea of the Cascade template is that it offers as little bloat as possible regarding technology choices and gets you started with writing business logic from day one. The only friction before fully working boilerplate on your `localhost:3000` is the `.env` file with correct environmental variables.
+
+[Visit Cascade 📦](https://cascade.stackonfire.com) 
+
+[Try out the demo here 🎮](https://cascade.stackonfire.com/login)
+
+[Explore the documentation 📄](https://stackonfire.mintlify.app/introduction)
+
 
 # Tools
 
