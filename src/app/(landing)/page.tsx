@@ -106,6 +106,9 @@ export default function Home() {
               <SiGithub className="mr-2 h-4 w-4" /> Code on GitHub
             </Button>
           </Link>
+          <Link href="https://stackonfire.mintlify.app/introduction">
+            <Button variant="outline">Docs</Button>
+          </Link>
         </div>
         <CloneRepoBadge />
       </div>
