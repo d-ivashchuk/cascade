@@ -138,7 +138,7 @@ const Billing = () => {
         ) : (
           <p>
             No subscription found.{" "}
-            <Link className="underline" href="/subscriptions">
+            <Link className="underline" href="/app/subscriptions">
               Subscribe here
             </Link>{" "}
           </p>
