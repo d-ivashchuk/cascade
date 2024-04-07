@@ -10,6 +10,29 @@ const slack = new Slack({
 
 import { z } from "zod";
 
+export const slackNewNewsletterSubscriberNotification = triggerClient.defineJob(
+  {
+    id: "cascade-new-subscriber",
+    name: "Cascade new subscriber notification",
+    version: "0.0.1",
+    trigger: eventTrigger({
+      name: "cascade.new.subscriber",
+      schema: z.object({
+        email: z.string().email(),
+      }),
+    }),
+    integrations: {
+      slack,
+    },
+    run: async (payload, io, ctx) => {
+      await io.slack.postMessage("post message", {
+        channel: "C06RZ0QNP6W",
+        text: `🔥 *New user subscribed to newsletter*\n\nEmail: ${payload.email}`,
+      });
+    },
+  },
+);
+
 export const slackNewUserNotification = triggerClient.defineJob({
   id: "cascade-new-user",
   name: "Cascade new user notification",

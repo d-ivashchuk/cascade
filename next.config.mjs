@@ -10,9 +10,10 @@ const config = {};
 // Injected content via Sentry wizard below
 
 import { withSentryConfig } from "@sentry/nextjs";
+import { withContentlayer } from "next-contentlayer";
 
 export default withSentryConfig(
-  config,
+  withContentlayer(config),
   {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options

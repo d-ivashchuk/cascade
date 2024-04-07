@@ -36,7 +36,7 @@ export async function Layout({ children }: { children: React.ReactNode }) {
           />
         </Link>
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-          {isInApplicationRoute && (
+          {isInApplicationRoute ? (
             <>
               <Link
                 href="/app/subscriptions"
@@ -61,6 +61,15 @@ export async function Layout({ children }: { children: React.ReactNode }) {
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 Management
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/blog"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Blog
               </Link>
             </>
           )}
@@ -88,7 +97,7 @@ export async function Layout({ children }: { children: React.ReactNode }) {
           </SheetTrigger>
           <SheetContent side="left">
             <nav className="grid gap-6 text-lg font-medium">
-              {isInApplicationRoute && (
+              {isInApplicationRoute ? (
                 <>
                   <Link
                     href="/app/subscriptions"
@@ -113,6 +122,21 @@ export async function Layout({ children }: { children: React.ReactNode }) {
                     className="text-muted-foreground transition-colors hover:text-foreground"
                   >
                     Management
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    href="/blog"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Blog
                   </Link>
                 </>
               )}

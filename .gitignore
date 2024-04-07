@@ -49,3 +49,6 @@ storybook-static
 *storybook.log
 # Sentry Config File
 .sentryclirc
+
+# contentlayer
+.contentlayer

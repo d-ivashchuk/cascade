@@ -1,4 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
+import { env } from "~/env.mjs";
+
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -39,3 +41,7 @@ export function assertNever(x: never): never {
 }
 
 export const currency = "€";
+
+export function absoluteUrl(path: string) {
+  return `${env.NEXT_PUBLIC_DEPLOYMENT_URL}${path}`;
+}
