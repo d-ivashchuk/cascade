@@ -9,7 +9,7 @@
     Visit Cascade 📦
   </a> 
   |||
-    <a href='https://cascade.stackonfire.com/login' target='_blank'>
+    <a href='https://cascade.stackonfire.com/app/login' target='_blank'>
 Try out the demo here 🎮
   </a>  
   |||
@@ -30,7 +30,7 @@ The idea of the Cascade template is that it offers as little bloat as possible r
 
 [Visit Cascade 📦](https://cascade.stackonfire.com) 
 
-[Try out the demo here 🎮](https://cascade.stackonfire.com/login)
+[Try out the demo here 🎮](https://cascade.stackonfire.com/app/login)
 
 [Explore the documentation 📄](https://stackonfire.mintlify.app/introduction)
 
