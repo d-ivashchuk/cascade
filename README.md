@@ -61,6 +61,7 @@ Support:
 
 # Honorable mentions
 
+- Without [Shadcn](https://twitter.com/shadcn) this boilerplate would not happen. Period. I rely on his UI a lot and took a lot of inspiration & code from his open-source projects
 - https://github.com/lmsqueezy/nextjs-billing & [Branko's](https://twitter.com/brankoconjic) work on it; I took a bunch of ideas for LS integration there
 - https://github.com/sadmann7/shadcn-table & [Sadman](https://twitter.com/sadmann17) for showcasing brilliant integration of Tanstack table with Shadcn/ui, I repurposed the code for Prisma
 - [Pontus](https://twitter.com/pontusab) and his impeccable tech stack in [Midday.ai](https://midday.ai/) inspired me to create the boilerplate at the first place
