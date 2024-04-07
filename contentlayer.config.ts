@@ -41,6 +41,7 @@ export default makeSource({
     rehypePlugins: [
       rehypeSlug,
       [
+        //@ts-expect-error would still work even though types are incorrect, need to fix this after contentlayer gets enough maintenenace
         rehypePrettyCode,
         {
           theme: "dracula",
