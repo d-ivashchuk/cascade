@@ -14,7 +14,7 @@ const LoginLogoutButton = () => {
 
   return (
     <DropdownMenuItem
-      onClick={() => (isAuthenticated ? signOut() : router.push("/login"))}
+      onClick={() => (isAuthenticated ? signOut() : router.push("/app/login"))}
     >
       {isAuthenticated ? "Logout" : "Login"}
     </DropdownMenuItem>

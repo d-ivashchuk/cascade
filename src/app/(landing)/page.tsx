@@ -98,7 +98,7 @@ export default function Home() {
           </h2>
         </div>
         <div className="flex gap-2 self-center align-middle">
-          <Link href="/login">
+          <Link href="/app/login">
             <Button>Try demo</Button>
           </Link>
           <Link target="_blank" href="https://github.com/d-ivashchuk/cascade">

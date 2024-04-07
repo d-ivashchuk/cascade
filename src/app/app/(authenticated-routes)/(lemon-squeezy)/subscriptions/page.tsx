@@ -82,7 +82,7 @@ const Subscriptions = () => {
         {userSubscriptionsQuery.data?.subscription ? (
           <h1>
             You are already subscribed. View your subscription{" "}
-            <Link href="/billing" className="underline">
+            <Link href="/app/billing" className="underline">
               here
             </Link>
           </h1>

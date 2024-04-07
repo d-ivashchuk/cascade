@@ -20,6 +20,9 @@ import { usePathname } from "next/navigation";
 
 export async function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+
+  const isInApplicationRoute = pathname.includes("/app");
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -33,28 +36,28 @@ export async function Layout({ children }: { children: React.ReactNode }) {
           />
         </Link>
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-          {pathname !== "/" && (
+          {isInApplicationRoute && (
             <>
               <Link
-                href="/subscriptions"
+                href="/app/subscriptions"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 Subscriptions
               </Link>
               <Link
-                href="/billing"
+                href="/app/billing"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 Billing
               </Link>
               <Link
-                href="/usage"
+                href="/app/usage"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 Usage
               </Link>
               <Link
-                href="/user-management"
+                href="/app/user-management"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 Management
@@ -64,7 +67,7 @@ export async function Layout({ children }: { children: React.ReactNode }) {
         </nav>
         <Sheet>
           <SheetTrigger asChild>
-            {pathname === "/" ? (
+            {isInApplicationRoute ? (
               <Image
                 src="/cd.svg"
                 width={40}
@@ -85,28 +88,28 @@ export async function Layout({ children }: { children: React.ReactNode }) {
           </SheetTrigger>
           <SheetContent side="left">
             <nav className="grid gap-6 text-lg font-medium">
-              {pathname !== "/" && (
+              {isInApplicationRoute && (
                 <>
                   <Link
-                    href="/subscriptions"
+                    href="/app/subscriptions"
                     className="text-muted-foreground transition-colors hover:text-foreground"
                   >
                     Subscriptions
                   </Link>
                   <Link
-                    href="/billing"
+                    href="/app/billing"
                     className="text-muted-foreground transition-colors hover:text-foreground"
                   >
                     Billing
                   </Link>
                   <Link
-                    href="/usage"
+                    href="/app/usage"
                     className="text-muted-foreground transition-colors hover:text-foreground"
                   >
                     Usage
                   </Link>
                   <Link
-                    href="/user-management"
+                    href="/app/user-management"
                     className="text-muted-foreground transition-colors hover:text-foreground"
                   >
                     Management

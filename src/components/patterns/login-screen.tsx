@@ -24,7 +24,7 @@ export function LoginScreen() {
             <Button
               onClick={() =>
                 signIn("discord", {
-                  callbackUrl: "/subscriptions/?loginState=signedIn",
+                  callbackUrl: "/app/subscriptions/?loginState=signedIn",
                 })
               }
               variant="outline"
@@ -36,7 +36,7 @@ export function LoginScreen() {
             <Button
               onClick={() =>
                 signIn("google", {
-                  callbackUrl: "/subscriptions/?loginState=signedIn",
+                  callbackUrl: "/app/subscriptions/?loginState=signedIn",
                 })
               }
               variant="outline"
