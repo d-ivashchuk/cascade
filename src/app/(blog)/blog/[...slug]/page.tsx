@@ -10,7 +10,7 @@ import { env } from "~/env.mjs";
 import { buttonVariants } from "~/components/ui/button";
 import { absoluteUrl, cn, formatDate } from "~/lib/utils";
 import { ChevronLeft } from "lucide-react";
-import { Mdx } from "~/components/patterns/mdx";
+
 import MdxContent from "./mdx-content";
 import Newsletter from "./newsletter";
 

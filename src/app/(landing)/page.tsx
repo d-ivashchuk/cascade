@@ -203,6 +203,9 @@ export default function Home() {
         <h2 className="mb-4 text-center text-3xl">
           What is covered in template
         </h2>
+        <h3 className="mb-4 text-center text-2xl">
+          <b>Technical</b>
+        </h3>
         <ul className="list-disc">
           <li>
             Basic T3 stack setup with Next.js, Prisma, PostgreSQL, TailwindCSS.
@@ -223,16 +226,8 @@ export default function Home() {
             <b>Slack notifications on new Users, background job processing</b>
           </li>
           <li>
-            Email user flows with Loops |{" "}
-            <b>Welcome emails for newly signed up</b>
-          </li>
-          <li>
             Error handling with Sentry |{" "}
             <b>Monitoring, Alerts, Issue tracking</b>
-          </li>
-          <li>
-            Analytics with Posthog |{" "}
-            <b>Event tracking, User behavior analysis</b>
           </li>
           <li>
             Storybook | <b>Component library, Documentation</b>
@@ -242,6 +237,29 @@ export default function Home() {
           </li>
           <li>
             Lost Pixel | <b>Visual regression testing</b>
+          </li>
+        </ul>
+        <h3 className="mb-4 mt-8 text-center text-2xl">
+          <b>Business</b>
+        </h3>
+        <ul className="list-disc">
+          <li>Simple markdown blog with Contentlayer </li>
+          <li>
+            SEO with Next.js |{" "}
+            <b>Dynamic Sitemap,Dynamic Open Graph, Twitter Cards</b>
+          </li>
+          <li>
+            Email user flows with Loops |{" "}
+            <b>
+              Welcome emails for newly signed up users, newsletter subscription
+            </b>
+          </li>
+          <li>
+            Analytics with Posthog |{" "}
+            <b>Event tracking, User behavior analysis</b>
+          </li>
+          <li>
+            Analytics with Plausible | <b>Page analytics</b>
           </li>
         </ul>
       </div>
