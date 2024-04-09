@@ -4,7 +4,7 @@ import React from "react";
 import { api } from "~/trpc/react";
 
 const TrpcErrorPage = () => {
-  const hello = api.post.hello.useQuery({
+  const hello = api.example.hello.useQuery({
     text: "world",
   });
   if (hello.isLoading) return <div>Loading...</div>;
