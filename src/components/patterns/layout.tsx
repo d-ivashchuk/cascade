@@ -57,6 +57,12 @@ export async function Layout({ children }: { children: React.ReactNode }) {
                 Usage
               </Link>
               <Link
+                href="/app/examples"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Examples
+              </Link>
+              <Link
                 href="/app/user-management"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
