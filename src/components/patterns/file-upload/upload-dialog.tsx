@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { getErrorMessage } from "~/lib/uploadthing";
+
 import {
   Form,
   FormField,
@@ -28,6 +28,7 @@ import {
 } from "~/components/ui/form";
 import { api } from "~/trpc/react";
 import { useSession } from "next-auth/react";
+import useGuardedSpendCredits from "~/hooks/use-guard-usage";
 
 const schema = z.object({
   images: z.array(z.instanceof(File)),
@@ -35,7 +36,7 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-export function UploadWithDialog() {
+export function UploadWithDialog({}) {
   const { update } = useSession();
   const [loading, setLoading] = React.useState(false);
   const updateUserMutation = api.user.updateUser.useMutation({
@@ -54,7 +55,15 @@ export function UploadWithDialog() {
     },
   });
 
+  const guardedUsage = useGuardedSpendCredits("fileUploads");
+
   async function onSubmit(input: Schema) {
+    const result = await guardedUsage.guardAndSpendCredits(1);
+    if (result?.hasRunOutOfCredits) {
+      toast.error("You ran out of credits");
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     const toastId = toast.loading("Uploading files...");
     const res = await uploadFiles(input.images);
@@ -77,7 +86,9 @@ export function UploadWithDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Upload new avatar</Button>
+        <Button disabled={guardedUsage.hasRunOutOfCredits} variant="outline">
+          {guardedUsage.hasRunOutOfCredits ? "Ran out of credits" : "Upload"}
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-xl">
         <DialogHeader>

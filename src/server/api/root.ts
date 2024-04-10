@@ -4,6 +4,7 @@ import { superAdminRouter } from "./routers/super-admin";
 import { marketingRouter } from "./routers/marketing";
 import { exampleRouter } from "./routers/example";
 import { userRouter } from "./routers/user";
+import { aiRouter } from "./routers/ai";
 
 /**
  * This is the primary router for your server.
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   superAdmin: superAdminRouter,
   marketing: marketingRouter,
   user: userRouter,
+  ai: aiRouter,
 });
 
 // export type definition of API

@@ -16,6 +16,8 @@ import {
 } from "@lemonsqueezy/lemonsqueezy.js";
 import { env } from "~/env.mjs";
 
+const paywalledFeatures = ["buttonClicks", "aiCalls", "fileUploads"] as const;
+
 const setupLemonSqueezy = () => {
   lemonSqueezySetup({
     apiKey: env.LEMON_SQUEEZY_API_KEY,
@@ -269,6 +271,7 @@ export const paymentManagementRouter = createTRPCRouter({
     .input(
       z.object({
         amount: z.number(),
+        feature: z.enum(paywalledFeatures),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -284,60 +287,69 @@ export const paymentManagementRouter = createTRPCRouter({
             },
           },
           update: {
-            buttonClicks: {
+            [input.feature]: {
               increment: input.amount,
             },
           },
           create: {
             userId: ctx.session.user.id,
             date: today,
-            buttonClicks: input.amount,
+            [input.feature]: input.amount,
           },
         });
       });
     }),
-  getUsageForUser: protectedProcedure.query(async ({ ctx }) => {
-    // Get the current day's start time
-    const todayStart = new Date();
-    todayStart.setHours(0, 0, 0, 0); // Normalize to start of day
+  getUsageForUser: protectedProcedure
+    .input(
+      z.object({
+        feature: z.enum(paywalledFeatures),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      // Get the current day's start time
+      const todayStart = new Date();
+      todayStart.setHours(0, 0, 0, 0); // Normalize to start of day
 
-    // Get the current month's start time
-    const monthStart = new Date();
-    monthStart.setDate(1); // Set to the first of the month
-    monthStart.setHours(0, 0, 0, 0); // Normalize to start of day
+      // Get the current month's start time
+      const monthStart = new Date();
+      monthStart.setDate(1); // Set to the first of the month
+      monthStart.setHours(0, 0, 0, 0); // Normalize to start of day
 
-    // Get today's usage for the user
-    const todaysUsage = await ctx.db.featureUsage.findFirst({
-      where: {
-        userId: ctx.session.user.id,
-        date: {
-          gte: todayStart,
+      // Get today's usage for the user
+      const todaysUsage = await ctx.db.featureUsage.findFirst({
+        where: {
+          userId: ctx.session.user.id,
+          date: {
+            gte: todayStart,
+          },
         },
-      },
-    });
+      });
 
-    // Get the current month's usage for the user
-    const currentMonthUsage = await ctx.db.featureUsage.findMany({
-      where: {
-        userId: ctx.session.user.id,
-        date: {
-          gte: monthStart,
+      // Get the current month's usage for the user
+      const currentMonthUsage = await ctx.db.featureUsage.findMany({
+        where: {
+          userId: ctx.session.user.id,
+          date: {
+            gte: monthStart,
+          },
         },
-      },
-    });
+      });
+      const feature = input.feature;
 
-    // Aggregate current month's data if needed, e.g., total button clicks
-    const totalButtonClicksThisMonth = currentMonthUsage.reduce(
-      (acc, usage) => acc + usage.buttonClicks,
-      0,
-    );
-    const totalButtonClicksToday = todaysUsage?.buttonClicks ?? 0;
+      // Aggregate current month's data if needed, e.g., total button clicks
+      const totalUsageForFeatureThisMonth = currentMonthUsage.reduce(
+        (acc, usage) => (acc + usage[feature]) as number,
+        0,
+      );
 
-    return {
-      totalButtonClicksToday,
-      totalButtonClicksThisMonth,
-    };
-  }),
+      const totalUsageForFeatureThisDay =
+        (todaysUsage?.[feature] as number) ?? 0;
+
+      return {
+        totalUsageForFeatureThisDay,
+        totalUsageForFeatureThisMonth,
+      };
+    }),
   getOneTimePurchasesForUser: protectedProcedure.query(async ({ ctx }) => {
     const oneTimePurchases = await ctx.db.oneTimePurchase.findMany({
       where: {

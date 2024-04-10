@@ -2,6 +2,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "~/components/ui/tabs";
 import React from "react";
 import { Separator } from "~/components/ui/separator";
 import UploadFile from "../upload";
+import AiProjectPlanner from "../ai";
 
 const Examples = () => {
   //this component will display some tabs with different examples
@@ -15,15 +16,17 @@ const Examples = () => {
         </h2>
       </div>
       <Separator className="my-2 mb-8" />
-      <Tabs defaultValue="upload" className="w-[400px]">
+      <Tabs defaultValue="upload" className="w-full">
         <TabsList>
-          <TabsTrigger value="upload">Upload</TabsTrigger>
-          <TabsTrigger value="ai">AI</TabsTrigger>
+          <TabsTrigger value="upload">Upload Image</TabsTrigger>
+          <TabsTrigger value="ai">AI Generation</TabsTrigger>
         </TabsList>
         <TabsContent value="upload">
           <UploadFile />
         </TabsContent>
-        <TabsContent value="ai">Under construction</TabsContent>
+        <TabsContent value="ai">
+          <AiProjectPlanner />
+        </TabsContent>
       </Tabs>
     </div>
   );

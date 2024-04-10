@@ -1,31 +1,39 @@
 import { useState, useCallback, useMemo } from "react";
 import { toast } from "sonner";
-import { api } from "~/trpc/react"; // Assuming TRPC's React Query hooks usage
+import { api } from "~/trpc/react";
 
-const CREDITS_WITHOUT_SUBSCRIPTION = 50;
+const CREDITS_WITHOUT_SUBSCRIPTION = 5;
 
-const useGuardedSpendCredits = () => {
+const useGuardedSpendCredits = (
+  feature: "buttonClicks" | "aiCalls" | "fileUploads",
+) => {
   const [showUpgradeDialog, setShowUpgradeDialog] = useState(false);
   const utils = api.useUtils();
 
   const { data: subscriptionData, isLoading: isLoadingSubscription } =
     api.paymentManagement.getSubscriptionByUserId.useQuery();
   const { data: usageData, isLoading: isLoadingUsage } =
-    api.paymentManagement.getUsageForUser.useQuery();
+    api.paymentManagement.getUsageForUser.useQuery({ feature });
   const spendCreditsMutation = api.paymentManagement.spendCredits.useMutation({
     onSuccess: () => {
       toast.success("Credits spent successfully");
     },
   });
 
-  // Calculate whether the user has run out of credits
-  const hasRunOutOfCredits = useMemo(() => {
-    const availableCredits =
-      subscriptionData?.plan?.credits ?? CREDITS_WITHOUT_SUBSCRIPTION;
-    const spentCredits = usageData?.totalButtonClicksThisMonth ?? 0;
-    const creditsLeft = availableCredits - spentCredits;
-    return creditsLeft < 1; // Adjust logic based on when you consider credits "run out"
-  }, [subscriptionData, usageData]);
+  const availableCredits =
+    (subscriptionData?.plan?.[feature] as number) ??
+    CREDITS_WITHOUT_SUBSCRIPTION;
+  // Dynamically calculate credits left based on the feature
+  const featureCreditsLeft = useMemo(() => {
+    const spentCredits = usageData?.totalUsageForFeatureThisMonth ?? 0;
+
+    return availableCredits - spentCredits;
+  }, [usageData, availableCredits]);
+
+  const hasRunOutOfCredits = useMemo(
+    () => featureCreditsLeft < 1,
+    [featureCreditsLeft],
+  );
 
   const guardAndSpendCredits = useCallback(
     async (spendAmount: number) => {
@@ -36,16 +44,21 @@ const useGuardedSpendCredits = () => {
       )
         return;
 
-      // Utilize the memoized hasRunOutOfCredits value to determine action
       if (!hasRunOutOfCredits) {
         try {
-          await spendCreditsMutation.mutateAsync({ amount: spendAmount });
-          await utils.paymentManagement.getUsageForUser.invalidate();
+          await spendCreditsMutation.mutateAsync({
+            amount: spendAmount,
+            feature,
+          });
+          await utils.paymentManagement.getUsageForUser.invalidate({
+            feature,
+          });
         } catch (error) {
           toast.error("Failed to spend credits");
         }
       } else {
         setShowUpgradeDialog(true);
+        return { hasRunOutOfCredits };
       }
     },
     [
@@ -54,6 +67,7 @@ const useGuardedSpendCredits = () => {
       hasRunOutOfCredits,
       spendCreditsMutation,
       utils,
+      feature,
     ],
   );
 
@@ -63,6 +77,8 @@ const useGuardedSpendCredits = () => {
     setShowUpgradeDialog,
     isPending: spendCreditsMutation.isPending,
     hasRunOutOfCredits,
+    featureCreditsLeft,
+    availableCredits,
   };
 };
 

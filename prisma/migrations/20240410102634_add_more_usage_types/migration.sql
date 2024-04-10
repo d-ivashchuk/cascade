@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "FeatureUsage" ADD COLUMN     "aiCalls" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "fileUploads" INTEGER NOT NULL DEFAULT 0;

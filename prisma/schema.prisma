@@ -116,7 +116,12 @@ model Plan {
     id                    Int    @id @default(autoincrement())
     lemonSqueezyVariantId String @unique
     name                  String
-    credits               Int?
+
+    // Paywalled features, this is the number of credits the user can spend on each feature per month
+
+    buttonClicks Int?
+    aiCalls      Int?
+    fileUploads  Int?
 
     users User[] // This establishes the one-to-many relationship
 }
@@ -125,6 +130,8 @@ model FeatureUsage {
     id           String @id @default(cuid())
     userId       String
     buttonClicks Int    @default(0)
+    aiCalls      Int    @default(0)
+    fileUploads  Int    @default(0)
 
     // Add more features as needed
     date DateTime @default(now())

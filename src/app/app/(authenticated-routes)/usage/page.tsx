@@ -10,8 +10,11 @@ import Link from "next/link";
 import { Skeleton } from "~/components/ui/skeleton";
 
 const Usage = () => {
-  const guardedUsage = useGuardedSpendCredits();
-  const getUsageForUserQuery = api.paymentManagement.getUsageForUser.useQuery();
+  const guardedUsage = useGuardedSpendCredits("buttonClicks");
+  const getUsageForUserQuery = api.paymentManagement.getUsageForUser.useQuery({
+    feature: "buttonClicks",
+  });
+
   const getSubscriptionForUserQuery =
     api.paymentManagement.getSubscriptionByUserId.useQuery();
 
@@ -41,15 +44,15 @@ const Usage = () => {
       {getUsageForUserQuery.data && (
         <div className="mb-4">
           <p>
-            Monthly credits available: <b>{plan?.credits ?? 50}</b>
+            Monthly credits available: <b>{plan?.buttonClicks ?? 50}</b>
           </p>
           <p>
             Credits spent today:{" "}
-            <b>{getUsageForUserQuery.data?.totalButtonClicksToday}</b>
+            <b>{getUsageForUserQuery.data?.totalUsageForFeatureThisDay}</b>
           </p>
           <p>
             Credits spent this month:{" "}
-            <b> {getUsageForUserQuery.data?.totalButtonClicksThisMonth}</b>
+            <b> {getUsageForUserQuery.data?.totalUsageForFeatureThisMonth}</b>
           </p>
         </div>
       )}

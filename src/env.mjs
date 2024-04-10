@@ -55,6 +55,7 @@ export const env = createEnv({
     LEMON_SQUEEZY_STORE_ID: z.string().optional(),
     LEMON_SQUEEZY_WEBHOOK_SECRET: z.string().optional(),
     LEMON_SQUEEZY_WEBHOOK_URL: z.string().optional(),
+    OPENAI_API_KEY: z.string().optional(),
     CASCADE_DEMO: z.string().optional(),
   },
 
@@ -99,6 +100,7 @@ export const env = createEnv({
     LEMON_SQUEEZY_STORE_ID: process.env.LEMON_SQUEEZY_STORE_ID,
     LEMON_SQUEEZY_WEBHOOK_SECRET: process.env.LEMON_SQUEEZY_WEBHOOK_SECRET,
     LEMON_SQUEEZY_WEBHOOK_URL: process.env.LEMON_SQUEEZY_WEBHOOK_URL,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     NEXT_PUBLIC_DEPLOYMENT_URL: process.env.NEXT_PUBLIC_DEPLOYMENT_URL,
     NEXT_PUBLIC_PLAUSIBLE_SELFHOSTED_URL:
       process.env.NEXT_PUBLIC_PLAUSIBLE_SELFHOSTED_URL,
