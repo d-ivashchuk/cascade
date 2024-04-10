@@ -1,0 +1,135 @@
+---
+title: Introduction
+description: "Welcome to Cascade - open-source SaaS boilerplate."
+icon: "rocket"
+---
+
+<img
+  className="block mx-auto h-64"
+  src="/images/cascade.svg"
+  alt="Hero Light"
+/>
+
+## Concept
+
+The idea of **Cascade** template is that it offers as little bloat as possible when it comes to technology choices. The only friction before fully working boilerplate on your `localhost:3000` is `.env` file with correct envorinmental variables and a database running.
+
+<Info>
+  **Prerequisite** You should have installed Node.js (version 18.10.0 or
+  higher).
+</Info>
+<Tip>
+
+Cascade barebone setup is a Next.js app with Prisma ORM and PostgreSQL database.
+
+It takes around 10-20 minutes to set up the project locally and start developing
+your SaaS application.
+
+</Tip>
+
+<Warning>
+
+To have all services up and running, you would require couple of hours and it will mostly be setting up the hosted versions. **Good news** is that you can start with the barebone setup and add services as you go.
+
+</Warning>
+
+## Tools
+
+Most of the tools selected for Cascade are open-source(**OSS**). Some of them are self-hosted(**SH**). All tools that are SaaS have generous free plans and should get you started without any additional costs.
+
+Core:
+
+- [T3 stack](https://create.t3.gg/)(**OSS**) - [Next.js](https://nextjs.org/), [tRPC](https://trpc.io/), [Prisma](https://www.prisma.io/)
+- [Postgres](https://www.postgresql.org/)(**OSS**) - modern & reliable database
+- [Auth.js](https://authjs.dev/)(**OSS**) - plug & play authentication with sessions managed in [Prisma](https://www.prisma.io/)
+
+Business:
+
+- [Lemon Squeezy](https://www.lemonsqueezy.com/) - modern and simple merchant of record
+- [PostHog](https://posthog.com/)(**SH**) - advanced user analytics & funnels
+- [Plausible](https://plausible.io/)(**SH**) - simple but powerful page analytics
+
+Support:
+
+- [Sentry](https://sentry.io/)(**SH**) - error & bug tracking for faster fixes
+- [Trigger.dev](https://trigger.dev/)(**SH**) - background job processing(send slack notifications on new user sign-up)
+- [Storybook](https://storybook.js.org/)(**OSS**) - manage your components & develop them in isolation
+- [Lost Pixel](https://www.lost-pixel.com/)(**OSS**) - simple frontend tests
+- [Crisp](https://crisp.chat/en/) - dead simple but powerful support chat
+
+## Setting up
+
+Barebone setup guides you trough the process of setting up Cascade locally. Each individual feature has its own guide that will help you set up the service.
+
+<CardGroup cols={2}>
+  <Card
+    title="Barebone setup"
+    icon="bolt-lightning"
+    href="https://mintlify.com/docs/quickstart"
+  >
+    Get Cascade started locally in minutes
+  </Card>
+</CardGroup>
+
+## What is packed into Cascade
+
+Peek into individual features that Cascade offers to get you started with your business.
+
+### Essentials
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="user" href="/essentials/authentication">
+    Authentication with NextAuth & Prisma
+  </Card>
+  <Card title="Database" icon="database" href="/essentials/database">
+    Database with Prisma & PostgreSQL
+  </Card>
+  <Card title="Payments" icon="lemon" href="/essentials/payments">
+    Payments with Lemon Squeezy
+  </Card>
+  <Card
+    title="Background jobs"
+    icon="stopwatch"
+    href="/essentials/background-jobs"
+  >
+    Background jobs with Trigger.dev
+  </Card>
+  <Card
+    title="Error tracking & monitoring"
+    icon="bug"
+    href="/essentials/error-tracking"
+  >
+    Sentry integration with tRPC, Next.js & Prisma
+  </Card>
+  <Card
+    title="User analytics"
+    icon="chart-mixed"
+    href="/essentials/user-analytics"
+  >
+    Plausible & Posthog integrations
+  </Card>
+  <Card title="Emails" icon="envelopes" href="/essentials/emails">
+    Keeping users in the loop with Loops
+  </Card>
+  {/* <Card title="Support chat" icon="headset" href="/essentials/support.mdx">
+    Support chat with Crisp
+  </Card> */}
+</CardGroup>
+
+### Marketing
+
+<CardGroup cols={2}>
+  <Card title="SEO" icon="window-maximize" href="/marketing/SEO">
+    SEO for your website
+  </Card>
+  <Card title="Blog" icon="feather" href="/marketing/blog">
+    Blog with Contentlayer
+  </Card>
+  <Card
+    title="Newsletter"
+    icon="envelope-open-text"
+    href="/marketing/newsletter"
+  >
+    Newsletter with Loops
+  </Card>
+</CardGroup>

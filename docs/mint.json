@@ -1,0 +1,67 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Starter Kit",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#757575",
+    "light": "#BDBDBD",
+    "dark": "#494949",
+    "anchors": {
+      "from": "#757575",
+      "to": "#BDBDBD"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:dima@stackonfire.com"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Demo Application",
+    "url": "https://cascade.stackonfire.com"
+  },
+  "tabs": [],
+  "anchors": [
+    {
+      "name": "Demo",
+      "icon": "laptop",
+      "url": "https://cascade.stackonfire.com"
+    },
+    {
+      "name": "Code on Github",
+      "icon": "github",
+      "url": "https://github.com/d-ivashchuk/cascade"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": ["introduction", "quickstart"]
+    },
+    {
+      "group": "Essentials",
+      "pages": [
+        "essentials/database",
+        "essentials/authentication",
+        "essentials/payments",
+        "essentials/background-jobs",
+        "essentials/emails",
+        "essentials/error-tracking",
+        "essentials/user-analytics"
+      ]
+    },
+    {
+      "group": "Marketing",
+      "pages": ["marketing/SEO", "marketing/blog", "marketing/newsletter"]
+    }
+  ],
+  "footerSocials": {
+    "twitter": "https://twitter.com/divdev_",
+    "github": "https://github.com/d-ivashchuk/cascade"
+  }
+}

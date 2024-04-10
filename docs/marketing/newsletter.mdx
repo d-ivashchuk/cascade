@@ -1,0 +1,30 @@
+---
+title: "Newsletter"
+description: "How Cascade handles newsletter"
+icon: "envelope-open-text"
+---
+
+## Newsletter tool of choice
+
+Cascade uses [Loops](https://www.loops.so) as its newsletter tool of choice. Loops is a powerful email marketing platform that allows you to send emails to your users, track their engagement, and set up funnels to automate your email marketing.
+
+## Setup with Cascade
+
+Cascade comes with an easy contact addition to Loops, just make sure you set up [Email Service](/essentials/emails). The actual subscription process is handled by Loops:
+
+```ts
+
+subscribeToNewsletter: publicProcedure
+    .input(z.object({ email: z.string().email() }))
+    .mutation(async ({ input }) => {
+      if (loops) {
+        await loops.createContact(input.email, {
+          source: "CASCADE_NEWSLETTER",
+        });
+      }
+      await slackNewNewsletterSubscriberNotification.invoke({
+        email: input.email,
+      });
+    }),
+
+```

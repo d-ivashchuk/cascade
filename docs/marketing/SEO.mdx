@@ -1,0 +1,115 @@
+---
+title: "SEO"
+description: "How to set up SEO for your Cascade project"
+icon: "window-maximize"
+---
+
+SEO is the process of optimizing your website for search engines. It involves optimizing your website's content, structure, and metadata to improve its visibility and ranking in search engine results pages (SERPs).
+
+Cascade offers several utilities to help you set up SEO for your project. These include:
+
+- sitemap generation that you can find at `src/app/sitemap.ts`, it is used by search engines to crawl your website and index your pages. Sitemap is adynamic MetadataRoute that you could easily populate with your content. As a starting point you have a basic sitemap that you can customize to fit your needs.
+
+```typescript
+import { allPosts } from "contentlayer/generated";
+import { type MetadataRoute } from "next";
+import { env } from "~/env.mjs";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const posts = allPosts;
+  return [
+    {
+      url: env.NEXT_PUBLIC_DEPLOYMENT_URL,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 1,
+    },
+    ...posts.map((post) => ({
+      url: `${env.NEXT_PUBLIC_DEPLOYMENT_URL}/${post.slug}`,
+      lastModified: new Date(post.date),
+      priority: 0.7,
+    })),
+  ];
+}
+```
+
+- metadata from next that you can find in the main landing page `src/app/(landing)/page.tsx`, it is used by search engines to provide information about your website, such as title, description, and keywords.
+
+```typescript
+export const metadata: Metadata = {
+  title: "Cascade -  free open-source SaaS boilerplate",
+  description:
+    "Kickstart your SaaS project with Cascade - open-source SaaS boilerplate. Payments, error tracking, analytics, background jobs, email marketing. All in one package.",
+  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  openGraph: {
+    url: "https://cascade.stackonfire.com",
+    title: "Cascade - open-source SaaS boilerplate",
+    description:
+      "Kickstart your SaaS project with Cascade - open-source SaaS boilerplate. Payments, error tracking, analytics, background jobs, email marketing. All in one package.",
+    images: [
+      {
+        url: "https://cascade.stackonfire.com/api/og",
+        width: 800,
+        height: 600,
+        alt: "Cascade logo",
+      },
+    ],
+  },
+};
+```
+
+- automatic open graph image generation that you can find at `src/app/api/og.ts`, it is used by search engines to provide a preview image for your website. You can swap the logo and design with your own.
+
+```typescript
+import { ImageResponse } from "next/og";
+
+export const runtime = "edge";
+
+export async function GET() {
+  const imageData = await fetch(new URL("./cascade.png", import.meta.url)).then(
+    (res) => res.arrayBuffer()
+  );
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          display: "flex",
+          background: "#f6f6f6",
+          width: "100%",
+          height: "100%",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {/* @ts-expect-error this works, so error is not so important :D  */}
+        <img width="500" src={imageData} />
+        <h1
+          style={{
+            fontFamily: "sans-serif",
+            fontSize: "3rem",
+            color: "#333",
+            marginTop: "1rem",
+          }}
+        >
+          Open-source SaaS starter kit
+        </h1>
+        <p
+          style={{
+            fontFamily: "sans-serif",
+            fontSize: "1.8rem",
+            color: "#666",
+          }}
+        >
+          Auth | Subscriptions | Background jobs | Emails | Analytics | User
+          management
+        </p>
+      </div>
+    ),
+    {
+      width: 1200,
+      height: 630,
+    }
+  );
+}
+```

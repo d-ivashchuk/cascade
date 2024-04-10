@@ -1,0 +1,80 @@
+---
+title: "Database"
+description: "How Cascade handles database"
+icon: "database"
+---
+
+## Database of choice
+
+Cascade uses [Postgres](https://www.postgresql.org/) as its database of choice. Postgres is a powerful, open source object-relational database system that uses and extends the SQL language combined with many features that safely store and scale the most complicated data workloads.
+
+## ORM of choice
+
+<Tip>This section mentions something about Authentication</Tip>
+
+Cascade uses [Prisma](https://www.prisma.io/) as its ORM of choice. Prisma is a modern database toolkit that makes database access easy with an auto-generated and type-safe query builder that's tailored to your database schema.
+
+Prisma connects really well to Postgres & NextAuth trough an adapter that makes it easy to use.
+
+Whenever you want to make changes to database schema, you can do so by changing the schema in the `schema.prisma` file and then running `npx prisma migrate dev` to generate a migration file and apply the changes to the database.
+
+## Database schema
+
+Database has a few main overlapping sections, those are clearly visible in prisma schema(content of each model omitted fro brevity)
+
+User related:
+
+```
+model Account {
+
+    ...
+
+}
+
+model Session {
+
+    ...
+
+}
+
+model User {
+
+    ...
+
+}
+
+```
+
+Payments & Subscriptions related:
+
+```
+model LemonSqueezySubscription {
+
+    ...
+
+}
+
+model OneTimePurchase {
+
+    ...
+
+}
+
+model Plan {
+
+    ...
+
+}
+
+```
+
+Feature usage related:
+
+```
+model FeatureUsage {
+
+    ...
+
+}
+
+```

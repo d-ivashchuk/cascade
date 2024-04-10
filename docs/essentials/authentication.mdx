@@ -1,0 +1,128 @@
+---
+title: "Authentication"
+description: "How Cascade handles authentication and authorization."
+icon: "user"
+---
+
+## Next Auth
+
+<Tip>
+
+Cascade is based on T3 app meaning that it uses NextAuth.js under the hood. Docs are [here](https://create.t3.gg/en/usage/next-auth).
+
+</Tip>
+
+This documentation is a brief overview of what is put on top of NextAuth.js to make it work with Cascade. We will focus on interesting parts!
+
+We extend the `Session` object with some additional types to make it work with Cascade. We need to add `role` and `planId` to the user object.
+
+```ts
+
+declare module "next-auth" {
+  interface Session extends DefaultSession {
+    user: {
+      id: string;
+      planId: string | null;
+      role: Role;
+    } & DefaultSession["user"];
+  }
+
+```
+
+In callbacks we need to fetch the user from the database and add the `role` and `planId` to the session object. This is done to make sure that whenever you are working with Session from NextAuth.js you have all the necessary information about the user.
+
+```ts
+  callbacks: {
+    session: async ({ session, user }) => {
+      const dbUser = await db.user.findUnique({
+        where: {
+          id: user.id,
+        },
+      });
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+          planId: dbUser?.planId ?? null,
+          role: dbUser?.role,
+        },
+      };
+    },
+  },
+```
+
+## External services
+
+<Tip>This section mentions something about Emails</Tip>
+<Tip>This section mentions something about Error Tracking</Tip>
+<Tip>This section mentions something about Background jobs</Tip>
+
+Next Auth is a great entrypoint for other services we need to use for our SaaS.
+
+For example, here we use events to manage the following:
+
+- Sentry - to connect user to the Sentry error tracking, so we could easily debug it.
+- Trigger.dev - to trigger a background job to send a notification when a new user signs up
+- Loops - to send a welcome email to the new users.
+
+```ts
+  events: {
+    async signIn({ user, isNewUser }) {
+      Sentry.setUser({ id: user.id, name: user.name, email: user.email ?? "" });
+      if (isNewUser) {
+        if (isTriggerEnabled) {
+          await slackNewUserNotification.invoke({
+            user: {
+              name: user.name ?? "unknown",
+              email: user.email ?? undefined,
+              id: user.id,
+            },
+          });
+        }
+        if (loops && user.email) {
+          await loops.sendEvent(
+            {
+              email: user.email,
+            },
+            "cascade_sign_up",
+            {
+              ...(user.name && { name: user.name }),
+              email: user.email,
+            },
+          );
+        }
+      }
+    },
+    signOut() {
+      Sentry.setUser(null);
+    },
+  },
+```
+
+## Providers
+
+Cascade comes with Discord & Google providers out of the box. You can easily add more providers by following the NextAuth.js documentation.
+
+```ts
+providers: [
+    DiscordProvider({
+      clientId: env.DISCORD_CLIENT_ID!,
+      clientSecret: env.DISCORD_CLIENT_SECRET!,
+    }),
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID!,
+      clientSecret: env.GOOGLE_CLIENT_SECRET!,
+    }),
+
+    /**
+     * ...add more providers here.
+     *
+     * Most other providers require a bit more work than the Discord provider. For example, the
+     * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
+     * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
+     *
+     * @see https://next-auth.js.org/providers/github
+     */
+  ],
+```

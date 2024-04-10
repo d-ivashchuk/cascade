@@ -1,0 +1,22 @@
+---
+title: "Error tracking"
+description: "How Cascade handles error tracking"
+icon: "bug"
+---
+
+## Error tracking tool of choice
+
+Cascade uses [Sentry](https://sentry.io) for error tracking. Sentry is an open-source error tracking tool that helps developers monitor and fix crashes in real time. It provides a comprehensive view of the errors that occur in your application, and helps you understand the impact of each error.
+
+## Set up Sentry with Cascade
+
+To set up Sentry with Cascade, you need to create a Sentry account and get a DSN (Data Source Name) for your project. The DSN is a unique identifier that Sentry uses to track errors in your application.
+
+After you have gone trough the setup process, you can add all of the related variabls to your `.env` file:
+
+```yml
+#Sentry
+SENTRY_DSN="https://asdjflkjsdkfljksdlfjslkdjf@o4506388280180736.ingest.us.sentry.io/4506978350399488"
+SENTRY_PROJECT="YOUR_PROJECT_NAME"
+SENTRY_ORG="YOUR_SENTRY_ORG"
+```

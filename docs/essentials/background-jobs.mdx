@@ -1,0 +1,70 @@
+---
+title: "Background jobs"
+description: "How cascade handles background jobs"
+icon: "stopwatch"
+---
+
+## Background jobs tool of choice
+
+Cascade uses [Trigger.dev](https://trigger.dev) as its background job tool of choice. Trigger.dev is a simple, reliable, and easy-to-use tool that allows you to schedule and run background jobs in a few simple steps.
+
+## What is a background job
+
+A background job is a task that is executed outside the normal flow of your application. It is typically used to perform tasks that are not time-sensitive, such as sending emails, sending notifications or even running a generation with AI.
+
+Cascade uses background jobs to send Slack notifications so if you want to get notified on new users or on new payments - you need to enable Slack integration on Trigger.dev platform.
+
+In general job definitions are pretty simple and should serve you as a good example if you want to create your own jobs.
+
+That is the definition of a job:
+
+```ts
+export const slackNewUserNotification = triggerClient.defineJob({
+  id: "cascade-new-user",
+  name: "Cascade new user notification",
+  version: "0.0.1",
+  trigger: eventTrigger({
+    name: "cascade.new.user",
+    schema: z.object({
+      user: z.object({
+        name: z.string(),
+        email: z.string().email().optional(),
+        id: z.string(),
+      }),
+    }),
+  }),
+  integrations: {
+    slack,
+  },
+  run: async (payload, io, ctx) => {
+    await io.slack.postMessage("post message", {
+      channel: "C06RZ0QNP6W",
+      text: `🔥 *New user signed up*\n\nName: ${payload.user.name}\nEmail: ${payload.user.email}\nID:${payload.user.id}`,
+    });
+  },
+```
+
+And that's how you invoke a job:
+
+```ts
+await slackNewUserNotification.invoke({
+  user: {
+    name: user.name ?? "unknown",
+    email: user.email ?? undefined,
+    id: user.id,
+  },
+});
+```
+
+## How to use Trigger.dev with Cascade
+
+First, you need to create a Trigger.dev account. Once you have an account, you can create a new project and get your API key.
+
+Populate the related environment variables in your `.env` file:
+
+```yml
+#Trigger.dev
+TRIGGER_API_KEY=tr_dev_iTsdlfkjyeD33yimXrW2N
+TRIGGER_API_URL=https://api.trigger.dev
+NEXT_PUBLIC_TRIGGER_PUBLIC_API_KEY=pk_dev_2AO1S8wxhEfsdlkjlksjdf
+```

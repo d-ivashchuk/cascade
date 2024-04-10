@@ -1,0 +1,104 @@
+---
+title: "Payments"
+description: "How Cascade handles payments and billing."
+icon: "lemon"
+---
+
+## Payment provider of choice
+
+Cascade uses [Lemon Squeezy](https://lemonsqueezy.com) as the merchant of record. Lemon Squeezy is a payment gateway that allows you to accept payments from your customers. It is a secure and reliable payment gateway that supports multiple payment methods. It also handles all tax related things for you.
+
+## Setup on Lemon Squeezy side
+
+<Warning>
+  Make sure you are doing all of the below in test mode. You can switch between
+  test and live in the Lemon Squeezy dashboard.
+</Warning>
+
+<Frame>
+  <img src="/images/ls-new-store.jpeg" style={{ borderRadius: "0.5rem" }} />
+</Frame>
+
+To start accepting even test payments, you need to [set up a new store](https://app.lemonsqueezy.com/settings/store/new).
+
+<Frame>
+  <img src="/images/ls-test.jpeg" style={{ borderRadius: "0.5rem" }} />
+</Frame>
+
+Next step is to create some test products. You can do that [here](https://app.lemonsqueezy.com/products).
+
+Let's start with a simple product. You can create a product by clicking on the `New Product` button.
+
+Choose Subscription and select $9.99 as the price for collection every month.
+
+<Frame>
+  <img src="/images/ls-month-sub.jpeg" style={{ borderRadius: "0.5rem" }} />
+</Frame>
+
+Now let's creat two variants of this Product, we will call it `Yearly` & `Monthly` and set the price to $9 & $100 respectively.
+
+<Frame>
+  <img src="/images/ls-variant.jpeg" style={{ borderRadius: "0.5rem" }} />
+</Frame>
+
+<Frame>
+  <img
+    src="/images/ls-variant-yearly.jpeg"
+    style={{ borderRadius: "0.5rem" }}
+  />
+</Frame>
+
+Save your product and variants, you should have deftault monthly subscription and yearly subscription now!
+
+Go to [stores page](https://app.lemonsqueezy.com/settings/stores) and copy the store ID.
+
+<Frame>
+  <img src="/images/ls-stores.jpeg" style={{ borderRadius: "0.5rem" }} />
+</Frame>
+
+Go to [api keys page](https://app.lemonsqueezy.com/settings/api) and create an API key. Copy it as well.
+
+<Tip>
+
+Name your API key corresponding to your store so you could rotate it later if needed.
+
+</Tip>
+
+## Setup on Cascade side
+
+Now that you have your store ID and API key, you can set up Cascade to use Lemon Squeezy as the payment provider.
+
+Inside of `.env` file add the following:
+
+```yml
+#Lemon Squeezy
+LEMON_SQUEEZY_API_KEY="COPY_YOUR_API_KEY_HERE"
+LEMON_SQUEEZY_STORE_ID="COPY_YOUR_STORE_ID_HERE"
+LEMON_SQUEEZY_WEBHOOK_SECRET="super-secret-long-string"
+LEMON_SQUEEZY_WEBHOOK_URL="https://cascade.loca.lt/api/lemon-squeezy/webhook"
+```
+
+<Warning>
+  We are using local tunnel for webhook URL, you should replace cascade with
+  your app name and generate correct connection in the next step.
+</Warning>
+
+Visit the Lemon Squeezy setup page on Cascade dashboard at `http://localhost:3000/ls-setup`
+
+<Warning>
+  Make sure you are signed in and your user has `SUPER_ADMIN` role.
+</Warning>
+
+<Frame>
+  <img
+    src="/images/ls-setup-dashboard.jpeg"
+    style={{ borderRadius: "0.5rem" }}
+  />
+</Frame>
+
+Run `npx localtunnel --port 3000 --subdomain cascade` with replacing cascade with your domain. This will make sure we are able to receive webhooks from Lemon Squeezy locally.
+
+You can now click two buttons to create a webhook and create plans in our database that correspond to Lemon Squeezy subsriptions.
+
+- `Create webhook` button will create a webhook on Lemon Squeezy side, so we can receive events. This is just a nice utility to setup webhooks without going to Lemon Squeezy dashboard.
+- `Sync plans` button will create plans in our database that correspond to Lemon Squeezy subscriptions. This is needed so we can match Lemon Squeezy events to our plans.

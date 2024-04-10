@@ -1,0 +1,48 @@
+---
+title: "User analytics"
+description: "How Cascade handles user analytics"
+icon: "chart-mixed"
+---
+
+## Analytics tools of choice
+
+Cascade uses [Posthog](https://posthog.com/) for user analytics. Posthog is an open-source product analytics platform that allows you to track user interactions on your website.
+
+For page analytics [Plausible](https://plausible.io/) is used. Plausible is a lightweight and open-source website analytics tool. It doesn't use cookies and is fully compliant with GDPR, CCPA and PECR.
+
+## How to set up Posthog
+
+To set up Posthog, first you need to register and create a new project on the [Posthog website](https://app.posthog.com/signup).
+
+Afer you have created a project, you will be given a `API_KEY` and a `HOst` which you will need to add to your `.env` file:
+
+```yml
+# Posthog
+NEXT_PUBLIC_POSTHOG_API_KEY="phc_eKxBLltchl3KHuezun4XR88arI8nOCiMDN4sadkjfjlsk"
+NEXT_PUBLIC_POSTHOG_HOST="https://app.posthog.com"
+```
+
+<Tip>
+  Cascade connects registed users to Posthog events automatically so you could
+  track user interactions in a fully aware way.
+</Tip>
+
+## How to set up Plausible
+
+To set up Plausible, first you need to register and create a new project on the [Plausible website](https://plausible.io/).
+
+Afer you have created a project, you will be given a `PLAUSIBLE_URL` which you will need to add to your `.env` file. It is possible to self host plausbile so env var could look like following:
+
+```yml
+NEXT_PUBLIC_PLAUSIBLE_SELFHOSTED_URL="https://plausible.stackonfire.com/js/script.js"
+NEXT_PUBLIC_DEPLOYMENT_URL=https://cascade.stackonfire.com
+```
+
+<Warning>
+  `NEXT_PUBLIC_DEPLOYMENT_URL` is also needed for Plausible to work correctly.
+</Warning>
+
+<Tip>
+  If you are using SaaS version of Plausible just paste the URL you get from the
+  dashboard into the above env var.
+</Tip>
