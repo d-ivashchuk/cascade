@@ -58,6 +58,10 @@
     {
       "group": "Marketing",
       "pages": ["marketing/SEO", "marketing/blog", "marketing/newsletter"]
+    },
+    {
+      "group": "Examples",
+      "pages": ["examples/ai", "examples/file-uploads"]
     }
   ],
   "footerSocials": {
