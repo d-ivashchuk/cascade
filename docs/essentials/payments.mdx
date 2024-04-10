@@ -102,3 +102,83 @@ You can now click two buttons to create a webhook and create plans in our databa
 
 - `Create webhook` button will create a webhook on Lemon Squeezy side, so we can receive events. This is just a nice utility to setup webhooks without going to Lemon Squeezy dashboard.
 - `Sync plans` button will create plans in our database that correspond to Lemon Squeezy subscriptions. This is needed so we can match Lemon Squeezy events to our plans.
+
+## Working with payment utilities
+
+To make sure we incentivise our users to subscribe to paid plans we sometimes need to block them from using our app. We can do this by using payment utilities.
+
+`useGuardedSpendCredits` hook will check if the user has enough credits to spend on the given feature. You need to ensure that you Prisma schema has a field for each feature you want to block.
+
+```ts
+const guardedUsage = useGuardedSpendCredits("buttonClicks");
+```
+
+Guarded usage retuns an object with useful fields for working with paywalled features:
+
+```ts
+const {
+    guardAndSpendCredits,
+    showUpgradeDialog,
+    setShowUpgradeDialog,
+    isPending: spendCreditsMutation.isPending,
+    hasRunOutOfCredits,
+    featureCreditsLeft,
+    availableCredits,
+  } = useGuardedSpendCredits("buttonClicks");
+```
+
+For example, if you want to block button clicks(a basic example exists [here](https://cascade.stackonfire.com/app/usage)), you need to add a `buttonClicks` field to your `Plan` schema & reflect it in your `FeatureUsage` schema.
+
+```
+model Plan {
+    id                    Int    @id @default(autoincrement())
+    lemonSqueezyVariantId String @unique
+    name                  String
+
+    // Paywalled features, this is the number of credits the user can spend on each feature per month
+
+    buttonClicks Int?
+    aiCalls      Int?
+    fileUploads  Int?
+
+    users User[] // This establishes the one-to-many relationship
+}
+```
+
+```
+model FeatureUsage {
+    id           String @id @default(cuid())
+    userId       String
+    buttonClicks Int    @default(0)
+    aiCalls      Int    @default(0)
+    fileUploads  Int    @default(0)
+
+    // Add more features as needed
+    date DateTime @default(now())
+    user User     @relation(fields: [userId], references: [id])
+
+    @@unique([userId, date])
+}
+```
+
+It is really easy to paywall any feature you want and show a dialog to the user to upgrade their plan.
+
+```ts
+ <>
+       <Button
+          onClick={() => guardedUsage.guardAndSpendCredits(10)}
+          disabled={guardedUsage.isPending}
+        >
+          {guardedUsage.isPending && (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          {guardedUsage.hasRunOutOfCredits
+            ? "Upgrade to spend 10 credits"
+            : "Spend 10 credits"}
+        </Button>
+      <UpgradeDialog
+        open={guardedUsage.showUpgradeDialog}
+        setOpen={guardedUsage.setShowUpgradeDialog}
+      />
+ </>
+```
