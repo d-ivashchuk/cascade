@@ -129,6 +129,12 @@ const {
 
 For example, if you want to block button clicks(a basic example exists [here](https://cascade.stackonfire.com/app/usage)), you need to add a `buttonClicks` field to your `Plan` schema & reflect it in your `FeatureUsage` schema.
 
+<Tip>
+  When you create plans automatically with `syncPlansFromLemonsqueezyVariants`
+  using [this guide](/essentials/payments#setup-on-cascade-side) you need to
+  manually input the limits for the features in your Database.
+</Tip>
+
 ```
 model Plan {
     id                    Int    @id @default(autoincrement())
@@ -144,6 +150,8 @@ model Plan {
     users User[] // This establishes the one-to-many relationship
 }
 ```
+
+To properly track feature usage you need to use a `FeatureUsage` model in database. This model will be used to track the usage of each feature for each user. Extent it when needed.
 
 ```
 model FeatureUsage {
