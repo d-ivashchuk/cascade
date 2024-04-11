@@ -14,6 +14,7 @@ import { type Metadata } from "next";
 
 import LsLogo from "./ls-logo";
 import { Button } from "~/components/ui/button";
+import { Badge } from "~/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "~/components/ui/tabs";
 import Link from "next/link";
 import { Terminal } from "lucide-react";
@@ -23,6 +24,7 @@ import Image from "next/image";
 import VideoComponent from "./video-component";
 
 import CloneRepoBadge from "./clone-repo-badge";
+import { format } from "date-fns";
 
 export const metadata: Metadata = {
   title: "Cascade -  free open-source SaaS boilerplate",
@@ -79,7 +81,27 @@ const Logos = () => {
   );
 };
 
-export default function Home() {
+export default async function Home() {
+  const stargazersQuery = await fetch(
+    `https://api.github.com/repos/d-ivashchuk/cascade`,
+    {
+      next: { revalidate: 60 },
+    },
+  );
+  const lastCommitQuery = await fetch(
+    `https://api.github.com/repos/d-ivashchuk/cascade/commits`,
+    {
+      next: { revalidate: 60 },
+    },
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const stargazersData: { stargazers_count: number } =
+    await stargazersQuery.json();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const lastCommitData: { commit: { committer: { date: string } } }[] =
+    await lastCommitQuery.json();
+
   return (
     <div className="px-4">
       <Image
@@ -92,18 +114,28 @@ export default function Home() {
       <div className="mb-4 flex flex-col justify-center text-center align-middle">
         <div className="mb-4">
           <h1 className="mb-2 text-4xl font-bold uppercase">Cascade</h1>
-          <h2 className="text-xl text-muted-foreground">
-            Free and <b>open-source</b> SaaS boilerplate. <br /> Start writing
-            your business logic from day 1.
+          <h2 className="mb-2 text-xl text-muted-foreground">
+            Free and <b>open-source</b> SaaS boilerplate. <br />
           </h2>
+          {lastCommitData[0] && (
+            <Badge variant="outline" className="mx-auto max-w-4xl">
+              <div className=" mr-2 h-2 w-2 animate-ping rounded-full bg-green-400 duration-1000" />
+              Last updated on{" "}
+              {format(new Date(lastCommitData[0].commit.committer.date), "PP")}
+            </Badge>
+          )}
         </div>
+
         <div className="flex gap-2 self-center align-middle">
           <Link href="/app/login">
             <Button>Try demo</Button>
           </Link>
           <Link target="_blank" href="https://github.com/d-ivashchuk/cascade">
             <Button variant="outline">
-              <SiGithub className="mr-2 h-4 w-4" /> Code on GitHub
+              <SiGithub className="mr-2 h-4 w-4" />{" "}
+              {stargazersData
+                ? stargazersData.stargazers_count
+                : "Code on GitHub"}
             </Button>
           </Link>
           <Link href="https://stackonfire.mintlify.app/introduction">
