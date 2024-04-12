@@ -85,13 +85,13 @@ export default async function Home() {
   const stargazersQuery = await fetch(
     `https://api.github.com/repos/d-ivashchuk/cascade`,
     {
-      next: { revalidate: 60 },
+      next: { revalidate: 60 * 60 },
     },
   );
   const lastCommitQuery = await fetch(
     `https://api.github.com/repos/d-ivashchuk/cascade/commits`,
     {
-      next: { revalidate: 60 },
+      next: { revalidate: 60 * 60 },
     },
   );
 
