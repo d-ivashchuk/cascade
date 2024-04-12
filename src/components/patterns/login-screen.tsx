@@ -10,7 +10,7 @@ export function LoginScreen() {
   return (
     <div className="min-h-[800px] w-full lg:grid lg:grid-cols-2">
       <div className="flex items-center justify-center py-12">
-        <div className="absolute inset-0 block lg:hidden [&_canvas]:h-[100vh]">
+        <div className="absolute inset-0 block lg:hidden [&_canvas]:h-[100vh] [&_canvas]:w-[100vw]">
           <Zenitho />
         </div>
         <div className="relative mx-auto  grid w-[350px] gap-6 rounded-lg bg-background px-4 py-8">
