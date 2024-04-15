@@ -17,8 +17,8 @@ const Onboarding = () => {
   const utils = api.useUtils();
   const getUserQuery = api.user.getUser.useQuery();
   const updateUserMutation = api.user.updateUser.useMutation({
-    onSuccess: (data) => {
-      utils.user.invalidate();
+    onSuccess: async () => {
+      await utils.user.invalidate();
       router.push("/app/onboarding/settings");
     },
   });
