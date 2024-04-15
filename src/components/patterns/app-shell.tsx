@@ -18,12 +18,15 @@ import { ColorModeSwitch } from "./color-mode-switch";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-export async function Layout({ children }: { children: React.ReactNode }) {
+export async function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   const isInApplicationRoute = pathname.includes("/app");
+  const isInOnboardingRoute = pathname.includes("/app/onboarding");
 
-  return (
+  return isInOnboardingRoute ? (
+    <main>{children}</main>
+  ) : (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
         <Link href="/" passHref>
@@ -38,6 +41,12 @@ export async function Layout({ children }: { children: React.ReactNode }) {
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           {isInApplicationRoute ? (
             <>
+              <Link
+                href="/app/onboarding/user"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Onboarding
+              </Link>
               <Link
                 href="/app/subscriptions"
                 className="text-muted-foreground transition-colors hover:text-foreground"

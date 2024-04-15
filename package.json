@@ -53,6 +53,7 @@
     "cmdk": "^1.0.0",
     "contentlayer": "^0.3.4",
     "date-fns": "^3.6.0",
+    "framer-motion": "^11.0.28",
     "loops": "^1.0.0",
     "lost-pixel": "^3.16.0",
     "lucide-react": "^0.363.0",

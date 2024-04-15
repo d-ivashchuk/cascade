@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { within, userEvent, expect } from "@storybook/test";
-import { Layout } from "~/components/patterns/layout";
+import { AppShell } from "~/components/patterns/app-shell";
 
 const meta = {
   title: "Example/Page",
-  component: Layout,
+  component: AppShell,
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: "fullscreen",
   },
-} satisfies Meta<typeof Layout>;
+} satisfies Meta<typeof AppShell>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

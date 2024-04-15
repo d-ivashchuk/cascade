@@ -4,7 +4,7 @@ import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 
-import { Layout } from "~/components/patterns/layout";
+import { AppShell } from "~/components/patterns/app-shell";
 import Providers from "~/components/providers";
 import { Suspense } from "react";
 import Script from "next/script";
@@ -31,7 +31,7 @@ export default function RootLayout({
         />
         <Suspense>
           <Providers>
-            <Layout>{children}</Layout>
+            <AppShell>{children}</AppShell>
           </Providers>
         </Suspense>
         <Toaster />
