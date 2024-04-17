@@ -123,7 +123,7 @@ export const paymentManagementRouter = createTRPCRouter({
             },
           },
           productOptions: {
-            redirectUrl: `${env.NEXT_PUBLIC_DEPLOYMENT_URL}/billing`,
+            redirectUrl: `${env.NEXT_PUBLIC_DEPLOYMENT_URL}/app/billing`,
           },
           checkoutOptions: {
             embed: input.embed,
